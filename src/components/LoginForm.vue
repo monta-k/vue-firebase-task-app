@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <h1 class="login-form__title">Task App</h1>
-    <btn class="login-form__btn">Googleアカウントでログイン</btn>
+    <btn class="login-form__btn" type="button">Googleアカウントでログイン</btn>
   </div>
 </template>
 
@@ -18,10 +18,14 @@ export default {
 
 <style lang="scss" scoped>
 .login-form {
-  padding: 50px 300px 100px 300px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  padding: 0px 300px 100px 300px;
+  border: solid white;
+  border-radius: 20px;
   &__title {
+    margin-top: 40px;
+    font-size: 100px;
     margin-bottom: 50px;
+    color: #153940;
   }
   &__btn {
     background-color: #DB4437;

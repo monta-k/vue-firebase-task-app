@@ -1,10 +1,22 @@
 <template>
-  <button class="btn" type="button" style="cursor:pointer" @click="handleClick"><slot /></button>
+  <button :class="classes" style="cursor:pointer" @click="handleClick"><slot /></button>
 </template>
 
 <script>
 export default {
   name: 'btn',
+  props: {
+    type: {
+      type: String,
+      default: 'button',
+    },
+  },
+  computed: {
+    classes() {
+      const cls = this.type === 'text' ? this.type : 'btn';
+      return cls;
+    },
+  },
   methods: {
     handleClick() {
       this.$emit('click');
@@ -20,5 +32,12 @@ export default {
     font-size: 1rem;
     outline: none;
     color: white;
+  }
+  .text {
+    border: none;
+    outline: none;
+    background-color: rgba(0,0,0,0);
+    font-size: 16px;
+    color: #3e3d34;
   }
 </style>
