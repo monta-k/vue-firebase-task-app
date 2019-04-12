@@ -32,6 +32,7 @@ export default {
     font-size: 1rem;
     outline: none;
     color: white;
+    background-color: #153940;
   }
   .text {
     border: none;
