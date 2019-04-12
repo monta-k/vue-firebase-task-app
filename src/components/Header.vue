@@ -31,6 +31,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
     &__title {
       color: #3e3d34;
     }
@@ -40,7 +41,7 @@ export default {
       justify-content: center;
       align-items: center;
       &__btn {
-        margin-left: 10px;
+        border-left: 1px solid #3e3d34 !important;
       }
     }
   }
