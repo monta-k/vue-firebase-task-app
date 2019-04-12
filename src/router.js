@@ -23,17 +23,17 @@ export default new Router({
       component: LoginPage,
     },
     {
-      path: 'task/new',
+      path: '/task/new',
       name: 'NewPage',
       component: NewPage,
     },
     {
-      path: 'task/edit',
+      path: '/task/edit',
       nema: 'EditPage',
       component: EditPage,
     },
     {
-      path: 'task/:id',
+      path: '/task/:id',
       name: 'ShowPage',
       component: ShowPage,
     },
