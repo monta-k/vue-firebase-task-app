@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import LoginPage from './views/LoginPage'
-import IndexPage from './views/IndexPage'
-import EditPage from './views/EditPage'
-import ShowPage from './views/ShowPage'
+import LoginPage from './views/LoginPage.vue';
+import IndexPage from './views/IndexPage.vue';
+import NewPage from './views/NewPage.vue';
+import EditPage from './views/EditPage.vue';
+import ShowPage from './views/ShowPage.vue';
 
 Vue.use(Router);
 
@@ -19,26 +20,26 @@ export default new Router({
     {
       path: '/login',
       name: 'LoginPage',
-      component: LoginPage
+      component: LoginPage,
     },
     {
       path: 'task/new',
       name: 'NewPage',
-      component: NewPage
+      component: NewPage,
     },
     {
       path: 'task/edit',
       nema: 'EditPage',
-      component: EditPage
+      component: EditPage,
     },
     {
       path: 'task/:id',
       name: 'ShowPage',
-      component: ShowPage
+      component: ShowPage,
     },
     {
       path: '*',
-      redirect: '/'
-    }
+      redirect: '/',
+    },
   ],
 });
