@@ -1,0 +1,45 @@
+<template>
+  <div class="show-page">
+    <card-detail></card-detail>
+    <div class="show-page__foot">
+      <Btn class="show-page__foot__edit">編集</Btn>
+      <Btn class="show-page__foot__delete">削除</Btn>
+    </div>
+  </div>
+</template>
+
+<script>
+import Btn from '@/components/Btn.vue';
+import CardDetail from '@/components/CardDetail.vue';
+
+export default {
+  components: {
+    Btn,
+    CardDetail,
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+  .show-page {
+    position: absolute;
+    top: 72px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: #faf161;
+    &__foot {
+      &__edit {
+        font-size: 22px;
+        width: 100px;
+        margin: 0 10px;
+      }
+      &__delete {
+        font-size: 22px;
+        width: 100px;
+        background-color: #DB4437;
+        margin: 0 10px;
+      }
+    }
+  }
+</style>
