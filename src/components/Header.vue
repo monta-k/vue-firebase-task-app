@@ -3,7 +3,7 @@
     <router-link to="/"><h2 class="navbar__title">Task App</h2></router-link>
     <div class="navbar__right">
       <UserIcon></UserIcon>
-      <Btn class="navbar__right__btn" type="text">ログアウト</Btn>
+      <Btn class="navbar__right__btn" type="text" @click="logout">ログアウト</Btn>
     </div>
   </header>
 </template>
@@ -11,11 +11,17 @@
 <script>
 import Btn from '@/components/Btn.vue';
 import UserIcon from '@/components/UserIcon.vue';
+import Auth from '../modules/auth';
 
 export default {
   components: {
     Btn,
     UserIcon,
+  },
+  methods: {
+    logout() {
+      Auth.logout(this);
+    },
   },
 };
 </script>

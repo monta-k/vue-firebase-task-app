@@ -12,6 +12,9 @@ export default {
   components: {
     TaskForm,
   },
+  mounted() {
+    this.$emit('loaded');
+  },
 };
 </script>
 

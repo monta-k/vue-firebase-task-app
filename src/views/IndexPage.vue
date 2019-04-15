@@ -17,6 +17,9 @@ export default {
     Btn,
     CardList,
   },
+  mounted() {
+    this.$emit('loaded');
+  },
 };
 </script>
 

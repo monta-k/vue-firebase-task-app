@@ -17,6 +17,9 @@ export default {
     Btn,
     CardDetail,
   },
+  mounted() {
+    this.$emit('loaded');
+  },
 };
 </script>
 
