@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import firebase from 'firebase';
 import Router from 'vue-router';
-import App from './App.vue';
 import LoginPage from './views/LoginPage.vue';
 import IndexPage from './views/IndexPage.vue';
 import NewPage from './views/NewPage.vue';

@@ -1,7 +1,7 @@
 <template>
-  <div :class="classes">
-    <img :class="classes + '__img'" src="https://lh4.googleusercontent.com/-nL_E6ZrOPQ4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdZMXI3lopDg6DmSvJLSEeUfXoQ9w/mo/photo.jpg" alt="アイコン">
-    <p :class="classes + '__name'">ログインユーザー</p>
+  <div :class="classes" v-cloak>
+    <img :class="classes + '__img'" :src="user.photo" alt="">
+    <p :class="classes + '__name'">{{ user.name }}</p>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ export default {
       type: String,
       default: 'default',
     },
+    user: Object,
   },
   computed: {
     classes() {
@@ -23,6 +24,9 @@ export default {
 </script>
 
 <style lang="scss">
+  [v-cloak] {
+    display: none;
+  }
   .user-icon {
     display: inline-block;
     &__img {

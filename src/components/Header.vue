@@ -2,7 +2,7 @@
   <header class="navbar">
     <router-link to="/"><h2 class="navbar__title">Task App</h2></router-link>
     <div class="navbar__right">
-      <UserIcon></UserIcon>
+      <UserIcon :user="user"></UserIcon>
       <Btn class="navbar__right__btn" type="text" @click="logout">ログアウト</Btn>
     </div>
   </header>
@@ -14,6 +14,9 @@ import UserIcon from '@/components/UserIcon.vue';
 import Auth from '../modules/auth';
 
 export default {
+  props: {
+    user: Object
+  },
   components: {
     Btn,
     UserIcon,
