@@ -2,7 +2,7 @@
   <div class="show-page">
     <card-detail></card-detail>
     <div class="show-page__foot">
-      <Btn class="show-page__foot__edit">編集</Btn>
+      <router-link to="/task/edit"><Btn class="show-page__foot__edit">編集</Btn></router-link>
       <Btn class="show-page__foot__delete">削除</Btn>
     </div>
   </div>
