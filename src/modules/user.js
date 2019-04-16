@@ -3,13 +3,13 @@ import db from '../firebaseInit';
 export default {
   findUser(user) {
     return new Promise((resolve, reject) => {
-      let find_user = null;
+      let findUser = null;
       try {
         db.collection('users').where('uid', '==', user.uid).get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            find_user = doc.data();
+            findUser = doc.data();
           });
-          resolve(find_user);
+          resolve(findUser);
         });
       } catch (error) {
         reject(error);
