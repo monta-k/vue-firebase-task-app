@@ -1,7 +1,7 @@
 <template>
   <div class="edit-page">
     <h2 class="edit-page__title">Edit Task</h2>
-    <task-form></task-form>
+    <task-form :allUsers="allUsers"></task-form>
   </div>
 </template>
 
@@ -9,6 +9,9 @@
 import TaskForm from '@/components/TaskForm.vue';
 
 export default {
+  props: {
+    allUsers: Object,
+  },
   components: {
     TaskForm,
   },

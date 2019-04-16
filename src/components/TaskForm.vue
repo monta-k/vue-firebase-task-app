@@ -21,9 +21,9 @@
       <div class="task-form__field__control">
         <select name="priority" class="task-form__field__control__select">
           <option value='' disabled selected style='display:none;'>担当者</option>
-          <option value="0">ユーザー1</option>
-          <option value="1">ユーザー2</option>
-          <option value="2">ユーザー3</option>
+          <option v-for="user in allUsers" :value="user.uid" :key="user.uid">
+            {{ user.name }}
+          </option>
         </select>
       </div>
     </div>
@@ -46,6 +46,9 @@
 import Btn from '@/components/Btn.vue';
 
 export default {
+  props: {
+    allUsers: Object,
+  },
   components: {
     Btn,
   },

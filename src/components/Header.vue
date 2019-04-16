@@ -2,7 +2,7 @@
   <header class="navbar">
     <router-link to="/"><h2 class="navbar__title">Task App</h2></router-link>
     <div class="navbar__right">
-      <UserIcon :user="user"></UserIcon>
+      <UserIcon :loginUser="loginUser"></UserIcon>
       <Btn class="navbar__right__btn" type="text" @click="logout">ログアウト</Btn>
     </div>
   </header>
@@ -15,7 +15,7 @@ import Auth from '../modules/auth';
 
 export default {
   props: {
-    user: Object,
+    loginUser: Object,
   },
   components: {
     Btn,

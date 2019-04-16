@@ -17,6 +17,18 @@ export default {
     });
   },
 
+  allUsers(vm) {
+    db.collection('users').get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let data = {
+          uid: doc.data().uid,
+          name: doc.data().name,
+        }
+        vm.allUsers.push(data)
+      })
+    })
+  },
+
   createUser(user) {
     db.collection('users').add({
       uid: user.uid,

@@ -1,39 +1,42 @@
 <template>
   <div id="app">
-    <Header v-if="$route.name !== 'LoginPage'" :user="user"></Header>
+    <Header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></Header>
     <loading v-if="loading"></loading>
-    <router-view @loaded="loaded"></router-view>
+    <router-view @loaded="loaded" :allUsers="allUsers"></router-view>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue';
 import Loading from '@/components/Loading.vue';
+import User from './modules/user';
 import firebase from 'firebase';
 
 export default {
   data() {
     return {
       loading: true,
-      user: {
+      loginUser: {
         uid: '',
         name: '',
         photo: '',
       },
+      allUsers: [],
     };
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.user.uid = user.uid;
-        this.user.name = user.displayName;
-        this.user.photo = user.photoURL;
+        this.loginUser.uid = user.uid;
+        this.loginUser.name = user.displayName;
+        this.loginUser.photo = user.photoURL;
       } else {
-        this.user.uid = '';
-        this.user.name = '';
-        this.user.photo = '';
+        this.loginUser.uid = '';
+        this.loginUser.name = '';
+        this.loginUser.photo = '';
       }
     });
+    User.allUsers(this);
   },
   components: {
     Header,
