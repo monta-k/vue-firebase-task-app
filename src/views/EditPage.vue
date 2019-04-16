@@ -25,7 +25,6 @@ export default {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: $main-color;
     &__title {
       font-size: 56px;
       font-weight: bold;

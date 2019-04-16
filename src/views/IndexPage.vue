@@ -29,7 +29,6 @@ export default {
     top: 72px;
     right: 0px;
     left: 0px;
-    background-color: $main-color;
     &__head {
       margin: 30px auto;
       width: 70%;

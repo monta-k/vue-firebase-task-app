@@ -33,13 +33,13 @@ export default {
   .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: $main-color;
     width: 70%;
     height: 72px;
     padding: 0 20px;
     position: fixed;
     top: 0;
     z-index: 1;
+    background-color: $main-color;
     &__title {
       color: $sub-color;
       font-size: 32px;

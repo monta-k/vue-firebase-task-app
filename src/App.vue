@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  background-color: $main-color;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,7 +62,6 @@ export default {
   right: 0px;
   left: 0px;
   bottom: 0px;
-  background-color: $main-color;
   display: flex;
   justify-content: center;
   align-items: center;
