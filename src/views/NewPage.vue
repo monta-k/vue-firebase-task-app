@@ -25,9 +25,11 @@ export default {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: #faf161;
+    background-color: $main-color;
     &__title {
       font-size: 56px;
+      font-weight: bold;
+      margin-top: 100px;
     }
   }
 </style>

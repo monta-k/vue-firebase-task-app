@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss" scoped>
 .login-page {
-  background-color: #faf161;
+  background-color: $main-color;
   position: absolute;
   top: 0px;
   right: 0px;

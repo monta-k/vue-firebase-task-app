@@ -53,13 +53,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $sub-color;
   position: absolute;
   top: 0px;
   right: 0px;
   left: 0px;
   bottom: 0px;
-  background-color: #faf161;
+  background-color: $main-color;
   display: flex;
   justify-content: center;
   align-items: center;

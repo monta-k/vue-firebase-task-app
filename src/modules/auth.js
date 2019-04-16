@@ -9,10 +9,7 @@ export default {
 
   logout(vm) {
     firebase.auth().signOut().then(() => {
-      console.log('ログアウトしました。');
       vm.$router.replace({ name: 'LoginPage' });
-    }).catch(() => {
-      console.log('ログアウトに失敗しました。');
     });
   },
 };

@@ -30,15 +30,16 @@ export default {
 
 <style lang="scss">
   .card-detail {
-    margin: 100px 20% 50px 20%;
-    padding: 10px;
+    width: 70%;
+    margin: 100px auto 30px auto !important;
+    padding: 20px !important;
     border-radius: 20px;
     background-color: white;
     &__head {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      border-bottom: 1px solid #153940;
+      border-bottom: 1px solid $sub-color;
       padding: 10px 0;
       &__title {
         font-size: 22px;
@@ -54,7 +55,7 @@ export default {
     &__foot {
       display: flex;
       justify-content: flex-end;
-      border-top: 1px solid #153940;
+      border-top: 1px solid $sub-color;
       padding: 10px 0;
       &__priority {
         margin-right: 20px;

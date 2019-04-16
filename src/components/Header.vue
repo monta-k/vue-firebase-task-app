@@ -15,7 +15,7 @@ import Auth from '../modules/auth';
 
 export default {
   props: {
-    user: Object
+    user: Object,
   },
   components: {
     Btn,
@@ -33,24 +33,25 @@ export default {
   .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #faf161;
-    width: 100%;
+    background-color: $main-color;
+    width: 70%;
     height: 72px;
     padding: 0 20px;
     position: fixed;
     top: 0;
-    left: 0;
     z-index: 1;
     &__title {
-      color: #3e3d34;
+      color: $sub-color;
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 72px;
     }
     &__right {
-      margin-right: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
       &__btn {
-        border-left: 1px solid #3e3d34 !important;
+        border-left: 1px solid $sub-color !important;
       }
     }
   }

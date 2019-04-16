@@ -30,18 +30,18 @@ export default {
     right: 0px;
     bottom: 0px;
     left: 0px;
-    background-color: #faf161;
+    background-color: $main-color;
     &__foot {
       &__edit {
         font-size: 22px;
         width: 100px;
-        margin: 0 10px;
+        margin: 0 70px;
       }
       &__delete {
         font-size: 22px;
         width: 100px;
         background-color: #DB4437;
-        margin: 0 10px;
+        margin: 0 70px;
       }
     }
   }

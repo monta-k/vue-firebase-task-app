@@ -65,7 +65,7 @@ export default {
           height: 40px;
           width: 100%;
           border: none;
-          border-bottom: 2px solid #153940;
+          border-bottom: 2px solid $sub-color;
           background-color: rgba(0,0,0,0);
         }
         &__select {
@@ -74,7 +74,7 @@ export default {
           height: 40px;
           width: 100%;
           border: none;
-          border-bottom: 2px solid #153940;
+          border-bottom: 2px solid $sub-color;
           border-radius: 0;
           background-color: rgba(0,0,0,0);
         }
@@ -83,7 +83,7 @@ export default {
           outline: none;
           height: 100px;
           width: 100%;
-          border: 2px solid #153940;
+          border: 2px solid $sub-color;
           border-radius: 5px;
         }
       }

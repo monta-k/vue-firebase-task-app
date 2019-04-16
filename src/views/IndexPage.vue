@@ -29,7 +29,7 @@ export default {
     top: 72px;
     right: 0px;
     left: 0px;
-    background-color: #faf161;
+    background-color: $main-color;
     &__head {
       margin: 30px auto;
       width: 70%;
@@ -41,7 +41,7 @@ export default {
         width: 250px;
         outline: none;
         border: none;
-        border-bottom: 2px solid #153940;
+        border-bottom: 2px solid $sub-color;
         background-color: rgba(0,0,0,0);
       }
       &__btn {
