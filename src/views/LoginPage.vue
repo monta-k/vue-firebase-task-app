@@ -11,12 +11,14 @@ export default {
   components: {
     LoginForm,
   },
+  mounted() {
+    this.$emit('loaded');
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .login-page {
-  background-color: #faf161;
   position: absolute;
   top: 0px;
   right: 0px;

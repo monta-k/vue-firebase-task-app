@@ -71,8 +71,11 @@ export default {
         width: 70%;
         margin: 0 auto;
         text-align: left;
+        font-weight: bold;
+        font-size: 32px;
       }
       &__cards {
+        margin: 20px 0px;
         &__single {
           margin: 10px auto;
           padding: 10px;

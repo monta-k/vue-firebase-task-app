@@ -32,13 +32,13 @@ export default {
     font-size: 1rem;
     outline: none;
     color: white;
-    background-color: #153940;
+    background-color: $sub-color;
   }
   .text {
     border: none;
     outline: none;
     background-color: rgba(0,0,0,0);
     font-size: 16px;
-    color: #3e3d34;
+    color: $sub-color;
   }
 </style>

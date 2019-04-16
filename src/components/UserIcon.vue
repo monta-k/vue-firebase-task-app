@@ -1,7 +1,7 @@
 <template>
-  <div :class="classes">
-    <img :class="classes + '__img'" src="https://lh4.googleusercontent.com/-nL_E6ZrOPQ4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdZMXI3lopDg6DmSvJLSEeUfXoQ9w/mo/photo.jpg" alt="アイコン">
-    <p :class="classes + '__name'">ログインユーザー</p>
+  <div :class="classes" v-cloak>
+    <img :class="classes + '__img'" :src="loginUser.photo" alt="">
+    <p :class="classes + '__name'">{{ loginUser.name }}</p>
   </div>
 </template>
 
@@ -12,6 +12,7 @@ export default {
       type: String,
       default: 'default',
     },
+    loginUser: Object,
   },
   computed: {
     classes() {
@@ -23,37 +24,38 @@ export default {
 </script>
 
 <style lang="scss">
+  @mixin img($width: 50px, $height: 50px) {
+    float: left;
+    margin-right: 10px;
+    border-radius: 50%;
+    width: $width;
+    height: $height;
+  }
+  @mixin name($pr: 10px, $lh: 50px) {
+    color: $sub-color;
+    float: left;
+    padding-right: 10px;
+    line-height: 50px;
+  }
+  [v-cloak] {
+    display: none;
+  }
   .user-icon {
     display: inline-block;
     &__img {
-      float: left;
-      margin-right: 10px;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      @include img();
     }
     &__name {
-      color: #3e3d34;
-      float: left;
-      padding-right: 10px;
+      @include name();
     }
   }
   .user-icon-mini {
     display: inline-block;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     &__img {
-      float: left;
-      margin-right: 10px;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      @include img(40px, 40px);
     }
     &__name {
-      color: #3e3d34;
-      float: left;
-      padding-right: 8px;
+      @include name(8px, 40px);
     }
   }
 </style>
