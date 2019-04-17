@@ -5,16 +5,17 @@ export default {
     db.collection('tasks').doc(taskId).get().then((doc) => {
       if (doc.exists) {
         return doc.data();
-      } else {
-        console.log("No such document!");
       }
-    }).catch(function(error) {
-      console.log("Error getting document:", error);
-    });
+      console.log('No such document!');
+      return null;
+    })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
   },
 
   submitTask(vm) {
-    const now = Date.now()
+    const now = Date.now();
     db.collection('tasks').add({
       name: vm.task.name,
       detail: vm.task.detail,
@@ -33,11 +34,11 @@ export default {
     });
   },
 
-  allTasks(vm) {
-    vm.allTasks = [];
+  allTasks() {
+    const array = [];
     db.collection('tasks').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        let data = {
+        const data = {
           id: doc.id,
           name: doc.data().name,
           detail: doc.data().detail,
@@ -49,10 +50,11 @@ export default {
           registered_user: null,
           assigned_user: null,
         };
-        db.doc('users/' + doc.data().registered_user).get().then((result) => { data.registered_user = result.data() });
-        db.doc('users/' + doc.data().assigned_user).get().then((result) => { data.assigned_user = result.data() });
-        vm.allTasks.push(data);
+        db.doc(`users/${doc.data().registered_user}`).get().then((result) => { data.registered_user = result.data(); });
+        db.doc(`users/${doc.data().assigned_user}`).get().then((result) => { data.assigned_user = result.data(); });
+        array.push(data);
       });
     });
+    return array;
   },
 };

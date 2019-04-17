@@ -17,16 +17,18 @@ export default {
     });
   },
 
-  allUsers(vm) {
+  allUsers() {
+    const array = [];
     db.collection('users').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = {
           uid: doc.data().uid,
           name: doc.data().name,
         };
-        vm.allUsers.push(data);
+        array.push(data);
       });
     });
+    return array;
   },
 
   createUser(user) {
@@ -36,8 +38,9 @@ export default {
       photo: user.photoURL,
     }).then(() => {
       console.log('user successfully create!');
-    }).catch((error) => {
-      console.error('Error create user: ', error);
-    });
+    })
+      .catch((error) => {
+        console.error('Error create user: ', error);
+      });
   },
 };

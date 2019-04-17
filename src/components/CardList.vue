@@ -39,19 +39,13 @@ export default {
   },
   computed: {
     toDoTask() {
-      return this.allTasks.filter((task) => {
-        return (task.progress === '0');
-      });
+      return this.allTasks.filter(task => task.progress === '0');
     },
     inProgressTask() {
-      return this.allTasks.filter((task) => {
-        return (task.progress === '10');
-      });
+      return this.allTasks.filter(task => task.progress === '10');
     },
     doneTask() {
-      return this.allTasks.filter((task) => {
-        return (task.progress === '20');
-      });
+      return this.allTasks.filter(task => task.progress === '20');
     },
   },
   components: {

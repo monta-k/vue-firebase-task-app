@@ -32,8 +32,8 @@ export default {
         this.loginUser.uid = user.uid;
         this.loginUser.name = user.displayName;
         this.loginUser.photo = user.photoURL;
-        User.allUsers(this);
-        Task.allTasks(this);
+        this.allUsers = User.allUsers();
+        this.allTasks = Task.allTasks();
       } else {
         this.loginUser.uid = '';
         this.loginUser.name = '';
@@ -42,9 +42,9 @@ export default {
     });
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       if (to.path === '/' && from.path === '/task/new') {
-        Task.allTasks(this);
+        this.allTasks = Task.allTasks();
       }
     },
   },
