@@ -1,19 +1,13 @@
 <template>
-  <div class="card-detail">
+  <div class="card-detail" v-if="task">
     <div class="card-detail__head">
-      <p class="card-detail__head__title">タスク名</p>
-      <user-icon class="card-detail__head__user"></user-icon>
+      <p class="card-detail__head__title">{{ task.name }}</p>
+      <user-icon class="card-detail__head__user" type="mini" :user="task.registered_user"></user-icon>
     </div>
-    <div class="card-detail__detail">
-      詳細/////////////////////////////////////////////
-      <br>
-      ////////////////////////////////////////////////
-      <br>
-      ////////////////////////////////////////////////
-    </div>
+    <div class="card-detail__detail"><pre>{{ task.detail }}</pre></div>
     <div class="card-detail__foot">
-      <p class="card-detail__foot__priority">優先度: 中</p>
-      <user-icon class="card-detail__foot__user"></user-icon>
+      <p class="card-detail__foot__priority">優先度: {{ priority }}</p>
+      <user-icon class="card-detail__foot__user" type="mini" :user="task.assigned_user"></user-icon>
     </div>
   </div>
 </template>
@@ -22,6 +16,24 @@
 import UserIcon from '@/components/UserIcon.vue';
 
 export default {
+  props: {
+    task: Object,
+  },
+  computed: {
+    priority() {
+      switch(this.task.priority) {
+        case '0':
+          return '低';
+          break;
+        case '10':
+          return '中';
+          break;
+        case '20':
+          return '高';
+          break;
+      }
+    },
+  },
   components: {
     UserIcon,
   },
@@ -59,6 +71,7 @@ export default {
       padding: 10px 0;
       &__priority {
         margin-right: 20px;
+        line-height: 50px;
       }
     }
   }

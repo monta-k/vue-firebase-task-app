@@ -1,11 +1,11 @@
 import db from '../firebaseInit';
 
 export default {
-  findUser(user) {
+  findUser(userId) {
     return new Promise((resolve, reject) => {
       let findUser = null;
       try {
-        db.collection('users').where('uid', '==', user.uid).get().then((querySnapshot) => {
+        db.collection('users').where('uid', '==', userId).get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             findUser = doc.data();
           });
@@ -17,27 +17,30 @@ export default {
     });
   },
 
-  allUsers(vm) {
+  allUsers() {
+    const array = [];
     db.collection('users').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        let data = {
+        const data = {
           uid: doc.data().uid,
           name: doc.data().name,
-        }
-        vm.allUsers.push(data)
-      })
-    })
+        };
+        array.push(data);
+      });
+    });
+    return array;
   },
 
   createUser(user) {
-    db.collection('users').add({
+    db.collection('users').doc(user.uid).set({
       uid: user.uid,
       name: user.displayName,
       photo: user.photoURL,
     }).then(() => {
       console.log('user successfully create!');
-    }).catch((error) => {
-      console.error('Error create user: ', error);
-    });
+    })
+      .catch((error) => {
+        console.error('Error create user: ', error);
+      });
   },
 };

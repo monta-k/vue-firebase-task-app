@@ -2,7 +2,7 @@
   <div id="app">
     <Header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></Header>
     <loading v-if="loading"></loading>
-    <router-view @loaded="loaded" :allUsers="allUsers"></router-view>
+    <router-view @loaded="loaded" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import Header from '@/components/Header.vue';
 import Loading from '@/components/Loading.vue';
 import User from './modules/user';
+import Task from './modules/task';
 import firebase from 'firebase';
 
 export default {
@@ -22,6 +23,7 @@ export default {
         photo: '',
       },
       allUsers: [],
+      allTasks: [],
     };
   },
   created() {
@@ -30,13 +32,21 @@ export default {
         this.loginUser.uid = user.uid;
         this.loginUser.name = user.displayName;
         this.loginUser.photo = user.photoURL;
+        this.allUsers = User.allUsers();
+        this.allTasks = Task.allTasks();
       } else {
         this.loginUser.uid = '';
         this.loginUser.name = '';
         this.loginUser.photo = '';
       }
     });
-    User.allUsers(this);
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path === '/' && from.path === '/task/new') {
+        this.allTasks = Task.allTasks();
+      }
+    },
   },
   components: {
     Header,

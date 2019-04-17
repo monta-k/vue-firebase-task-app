@@ -1,25 +1,25 @@
 <template>
-  <form  class="task-form">
+  <form  class="task-form" @submit.prevent="submitTask">
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <input class="task-form__field__control__input" type="text" placeholder="タスク名">
+        <input class="task-form__field__control__input" type="text" placeholder="タスク名" v-model="task.name">
       </div>
     </div>
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="priority" class="task-form__field__control__select">
+        <select name="priority" class="task-form__field__control__select" v-model="task.priority">
           <option value='' disabled selected style='display:none;'>優先度</option>
           <option value="0">低</option>
-          <option value="1">中</option>
-          <option value="2">高</option>
+          <option value="10">中</option>
+          <option value="20">高</option>
         </select>
       </div>
     </div>
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="priority" class="task-form__field__control__select">
+        <select name="assigned_user" class="task-form__field__control__select" v-model="task.assigned_user">
           <option value='' disabled selected style='display:none;'>担当者</option>
           <option v-for="user in allUsers" :value="user.uid" :key="user.uid">
             {{ user.name }}
@@ -30,7 +30,7 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <textarea class="task-form__field__control__text" placeholder="詳細"></textarea>
+        <textarea class="task-form__field__control__text" placeholder="詳細" v-model="task.detail"></textarea>
       </div>
     </div>
 
@@ -44,10 +44,27 @@
 
 <script>
 import Btn from '@/components/Btn.vue';
+import Task from '../modules/task';
 
 export default {
+  data() {
+    return {
+      task: {
+        name: '',
+        priority: '',
+        assigned_user: '',
+        detail: '',
+      },
+    };
+  },
   props: {
-    allUsers: Object,
+    allUsers: Array,
+    loginUser: Object,
+  },
+  methods: {
+    submitTask() {
+      Task.submitTask(this);
+    },
   },
   components: {
     Btn,
