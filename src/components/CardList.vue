@@ -3,51 +3,27 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title">To Do</h1>
       <div class="card-list__section__cards">
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
-        </router-link>
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
-        </router-link>
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
+        <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" to="/task/show">
+          <p class="card-list__section__cards__single__title">{{ task.name }}</p>
+          <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
       </div>
     </div>
     <div class="card-list__section">
       <h1 class="card-list__section__title">In Progress</h1>
       <div class="card-list__section__cards">
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
-        </router-link>
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
-        </router-link>
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
+        <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" to="/task/show">
+          <p class="card-list__section__cards__single__title">{{ task.name }}</p>
+          <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
       </div>
     </div>
     <div class="card-list__section">
       <h1 class="card-list__section__title">Done</h1>
       <div class="card-list__section__cards">
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
-        </router-link>
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
-        </router-link>
-        <router-link class="card-list__section__cards__single" to="/task/show">
-          <p class="card-list__section__cards__single__title">タスク名</p>
-          <user-icon class="card-list__section__cards__single__user" type="mini"></user-icon>
+        <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" to="/task/show">
+          <p class="card-list__section__cards__single__title">{{ task.name }}</p>
+          <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
       </div>
     </div>
@@ -56,8 +32,34 @@
 
 <script>
 import UserIcon from '@/components/UserIcon.vue';
+import Task from '../modules/task';
 
 export default {
+  data() {
+    return {
+      allTasks: [],
+    };
+  },
+  computed: {
+    toDoTask() {
+      return this.allTasks.filter((task) => {
+        return (task.progress === '0');
+      });
+    },
+    inProgressTask() {
+      return this.allTasks.filter((task) => {
+        return (task.progress === '10');
+      });
+    },
+    doneTask() {
+      return this.allTasks.filter((task) => {
+        return (task.progress === '20');
+      });
+    },
+  },
+  created() {
+    Task.allTasks(this);
+  },
   components: {
     UserIcon,
   },

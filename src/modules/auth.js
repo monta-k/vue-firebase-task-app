@@ -6,7 +6,7 @@ export default {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider).then((result) => {
       // ログインしたユーザーがDBに登録されているか確認
-      User.findUser(result.user).then((findUser) => {
+      User.findUser(result.user.uid).then((findUser) => {
         // 登録されていなかったらユーザー登録処理
         if (findUser == null) {
           User.createUser(result.user);

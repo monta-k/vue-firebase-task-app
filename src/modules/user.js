@@ -1,11 +1,11 @@
 import db from '../firebaseInit';
 
 export default {
-  findUser(user) {
+  findUser(userId) {
     return new Promise((resolve, reject) => {
       let findUser = null;
       try {
-        db.collection('users').where('uid', '==', user.uid).get().then((querySnapshot) => {
+        db.collection('users').where('uid', '==', userId).get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             findUser = doc.data();
           });
@@ -30,7 +30,7 @@ export default {
   },
 
   createUser(user) {
-    db.collection('users').add({
+    db.collection('users').doc(user.uid).set({
       uid: user.uid,
       name: user.displayName,
       photo: user.photoURL,

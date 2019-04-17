@@ -1,7 +1,7 @@
 <template>
   <div :class="classes" v-cloak>
-    <img :class="classes + '__img'" :src="loginUser.photo" alt="">
-    <p :class="classes + '__name'">{{ loginUser.name }}</p>
+    <img :class="classes + '__img'" :src="user.photo" alt="">
+    <p :class="classes + '__name'">{{ user.name }}</p>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
       type: String,
       default: 'default',
     },
-    loginUser: Object,
+    user: Object,
   },
   computed: {
     classes() {
