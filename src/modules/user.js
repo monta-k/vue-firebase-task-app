@@ -20,13 +20,13 @@ export default {
   allUsers(vm) {
     db.collection('users').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        let data = {
+        const data = {
           uid: doc.data().uid,
           name: doc.data().name,
-        }
-        vm.allUsers.push(data)
-      })
-    })
+        };
+        vm.allUsers.push(data);
+      });
+    });
   },
 
   createUser(user) {
