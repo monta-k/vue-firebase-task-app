@@ -3,7 +3,7 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title">To Do</h1>
       <div class="card-list__section__cards">
-        <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" to="/task/show">
+        <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -12,7 +12,7 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title">In Progress</h1>
       <div class="card-list__section__cards">
-        <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" to="/task/show">
+        <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -21,7 +21,7 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title">Done</h1>
       <div class="card-list__section__cards">
-        <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" to="/task/show">
+        <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -32,13 +32,10 @@
 
 <script>
 import UserIcon from '@/components/UserIcon.vue';
-import Task from '../modules/task';
 
 export default {
-  data() {
-    return {
-      allTasks: [],
-    };
+  props: {
+    allTasks: Array,
   },
   computed: {
     toDoTask() {
@@ -56,9 +53,6 @@ export default {
         return (task.progress === '20');
       });
     },
-  },
-  created() {
-    Task.allTasks(this);
   },
   components: {
     UserIcon,
@@ -87,6 +81,7 @@ export default {
           display: block;
           display: flex;
           justify-content: space-between;
+          color: $sub-color;
           &__title {
             margin: 0;
             font-size: 22px;

@@ -34,9 +34,11 @@ export default {
   },
 
   allTasks(vm) {
+    vm.allTasks = [];
     db.collection('tasks').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         let data = {
+          id: doc.id,
           name: doc.data().name,
           detail: doc.data().detail,
           priority: doc.data().priority,

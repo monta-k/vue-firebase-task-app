@@ -1,6 +1,6 @@
 <template>
   <div class="show-page">
-    <card-detail></card-detail>
+    <card-detail :task="showTask"></card-detail>
     <div class="show-page__foot">
       <router-link to="/task/edit"><Btn class="show-page__foot__edit">編集</Btn></router-link>
       <Btn class="show-page__foot__delete">削除</Btn>
@@ -13,6 +13,16 @@ import Btn from '@/components/Btn.vue';
 import CardDetail from '@/components/CardDetail.vue';
 
 export default {
+  props: {
+    allTasks: Array,
+  },
+  computed: {
+    showTask() {
+      return this.allTasks.find((task) => {
+        return (task.id === this.$route.params.task);
+      });
+    },
+  },
   components: {
     Btn,
     CardDetail,

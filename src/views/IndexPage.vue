@@ -4,7 +4,7 @@
       <input type="text" class="index-page__head__search" placeholder="検索">
       <router-link to="/task/new"><Btn class="index-page__head__btn">Add+</Btn></router-link>
     </div>
-    <card-list></card-list>
+    <card-list :allTasks="allTasks"></card-list>
   </div>
 </template>
 
@@ -13,6 +13,9 @@ import Btn from '@/components/Btn.vue';
 import CardList from '@/components/CardList.vue';
 
 export default {
+  props: {
+    allTasks: Array,
+  },
   components: {
     Btn,
     CardList,
