@@ -1,5 +1,5 @@
 <template>
-  <form  class="task-form">
+  <form  class="task-form" @submit.prevent="submitTask">
     <div class="task-form__field">
       <div class="task-form__field__control">
         <input class="task-form__field__control__input" type="text" placeholder="タスク名" v-model="task.name">
@@ -44,6 +44,7 @@
 
 <script>
 import Btn from '@/components/Btn.vue';
+import Task from '../modules/task';
 
 export default {
   data() {
@@ -57,7 +58,13 @@ export default {
     };
   },
   props: {
-    allUsers: Object,
+    allUsers: Array,
+    loginUser: Object,
+  },
+  methods: {
+    submitTask() {
+      Task.submitTask(this);
+    },
   },
   components: {
     Btn,

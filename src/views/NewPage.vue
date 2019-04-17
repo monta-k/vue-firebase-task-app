@@ -1,7 +1,7 @@
 <template>
   <div class="new-page">
     <h2 class="new-page__title">New Task</h2>
-    <task-form :allUsers="allUsers"></task-form>
+    <task-form :allUsers="allUsers" :loginUser="loginUser"></task-form>
   </div>
 </template>
 
@@ -10,7 +10,8 @@ import TaskForm from '@/components/TaskForm.vue';
 
 export default {
   props: {
-    allUsers: Object,
+    allUsers: Array,
+    loginUser: Object,
   },
   components: {
     TaskForm,

@@ -2,7 +2,7 @@
   <div id="app">
     <Header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></Header>
     <loading v-if="loading"></loading>
-    <router-view @loaded="loaded" :allUsers="allUsers"></router-view>
+    <router-view @loaded="loaded" :allUsers="allUsers" :loginUser="loginUser"></router-view>
   </div>
 </template>
 

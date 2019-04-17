@@ -13,8 +13,24 @@ export default {
     });
   },
 
-  submitTask(taskId) {
-
+  submitTask(vm) {
+    const now = Date.now()
+    db.collection('tasks').add({
+      name: vm.task.name,
+      detail: vm.task.detail,
+      priority: vm.task.priority,
+      progress: '0',
+      created_at: now,
+      updated_at: now,
+      updated_by: vm.loginUser.uid,
+      registered_user: vm.loginUser.uid,
+      assigned_user: vm.task.assigned_user,
+    }).then(() => {
+      console.log('task successfully create!');
+      vm.$router.replace('/');
+    }).catch((error) => {
+      console.error('Error create task: ', error);
+    });
   },
 
   allTasks(vm) {

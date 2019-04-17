@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" v-cloak>
+  <div :class="classes" v-if="user" v-cloak>
     <img :class="classes + '__img'" :src="user.photo" alt="">
     <p :class="classes + '__name'">{{ user.name }}</p>
   </div>
