@@ -1,19 +1,6 @@
 import db from '../firebaseInit';
 
 export default {
-  findTask(taskId) {
-    db.collection('tasks').doc(taskId).get().then((doc) => {
-      if (doc.exists) {
-        return doc.data();
-      }
-      console.log('No such document!');
-      return null;
-    })
-      .catch((error) => {
-        console.log('Error getting document:', error);
-      });
-  },
-
   submitTask(vm) {
     const now = Date.now();
     db.collection('tasks').add({
@@ -56,5 +43,22 @@ export default {
       });
     });
     return array;
+  },
+
+  deleteTask(taskId) {
+    return new Promise((resolve, reject) => {
+      try {
+        db.collection('tasks').doc(taskId).get().then((doc) => {
+          if (doc.exists) {
+            if (window.confirm('Are you sure?')) {
+              doc.ref.delete();
+              resolve();
+            }
+          }
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
   },
 };

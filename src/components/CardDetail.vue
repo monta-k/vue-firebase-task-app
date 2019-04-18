@@ -21,17 +21,20 @@ export default {
   },
   computed: {
     priority() {
-      switch(this.task.priority) {
+      let priority = '';
+      switch (this.task.priority) {
         case '0':
-          return '低';
+          priority = '低';
           break;
         case '10':
-          return '中';
+          priority = '中';
           break;
         case '20':
-          return '高';
+          priority = '高';
           break;
+        default:
       }
+      return priority;
     },
   },
   components: {
