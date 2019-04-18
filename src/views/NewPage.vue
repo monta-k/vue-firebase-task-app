@@ -1,7 +1,7 @@
 <template>
   <div class="new-page">
     <h2 class="new-page__title">New Task</h2>
-    <task-form :allUsers="allUsers" :loginUser="loginUser"></task-form>
+    <task-form :allUsers="allUsers" :loginUser="loginUser" :task="task"></task-form>
   </div>
 </template>
 
@@ -9,6 +9,21 @@
 import TaskForm from '@/components/TaskForm.vue';
 
 export default {
+  data() {
+    return {
+      task: {
+        name: '',
+        priority: '',
+        progress: '',
+        assigned_user: {
+          name: '',
+          photo: '',
+          uid: '',
+        },
+        detail: '',
+      },
+    };
+  },
   props: {
     allUsers: Array,
     loginUser: Object,

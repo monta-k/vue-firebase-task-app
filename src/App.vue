@@ -42,8 +42,8 @@ export default {
     });
   },
   watch: {
-    $route(to, from) {
-      if (to.path === '/' && from.path === '/task/new') {
+    $route(to) {
+      if (to.path === '/') {
         this.allTasks = Task.allTasks();
       }
     },

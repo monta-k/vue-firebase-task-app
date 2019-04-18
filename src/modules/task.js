@@ -1,37 +1,12 @@
 import db from '../firebaseInit';
 
 export default {
-  findTask(taskId) {
-    db.collection('tasks').doc(taskId).get().then((doc) => {
-      if (doc.exists) {
-        return doc.data();
-      }
-      console.log('No such document!');
-      return null;
-    })
-      .catch((error) => {
-        console.log('Error getting document:', error);
-      });
-  },
-
   submitTask(vm) {
-    const now = Date.now();
-    db.collection('tasks').add({
-      name: vm.task.name,
-      detail: vm.task.detail,
-      priority: vm.task.priority,
-      progress: '0',
-      created_at: now,
-      updated_at: now,
-      updated_by: vm.loginUser.uid,
-      registered_user: vm.loginUser.uid,
-      assigned_user: vm.task.assigned_user,
-    }).then(() => {
-      console.log('task successfully create!');
-      vm.$router.replace('/');
-    }).catch((error) => {
-      console.error('Error create task: ', error);
-    });
+    if (vm.task.id === undefined) {
+      this.createTask(vm);
+    } else {
+      this.updateTask(vm);
+    }
   },
 
   allTasks() {
@@ -56,5 +31,64 @@ export default {
       });
     });
     return array;
+  },
+
+  createTask(vm) {
+    const now = Date.now();
+    db.collection('tasks').add({
+      name: vm.task.name,
+      detail: vm.task.detail,
+      priority: vm.task.priority,
+      progress: vm.task.progress,
+      created_at: now,
+      updated_at: now,
+      updated_by: vm.loginUser.uid,
+      registered_user: vm.loginUser.uid,
+      assigned_user: vm.task.assigned_user.uid,
+    }).then(() => {
+      console.log('task successfully create!');
+      vm.$router.replace('/');
+    })
+      .catch((error) => {
+        console.error('Error create task: ', error);
+      });
+  },
+
+  updateTask(vm) {
+    const now = Date.now();
+    db.collection('tasks').doc(vm.task.id).set({
+      name: vm.task.name,
+      detail: vm.task.detail,
+      priority: vm.task.priority,
+      progress: vm.task.progress,
+      created_at: vm.task.created_at,
+      updated_at: now,
+      updated_by: vm.loginUser.uid,
+      registered_user: vm.loginUser.uid,
+      assigned_user: vm.task.assigned_user.uid,
+    }).then(() => {
+      console.log('task successfully update!');
+      vm.$router.replace('/');
+    })
+      .catch((error) => {
+        console.error('Error update task: ', error);
+      });
+  },
+
+  deleteTask(taskId) {
+    return new Promise((resolve, reject) => {
+      try {
+        db.collection('tasks').doc(taskId).get().then((doc) => {
+          if (doc.exists) {
+            if (window.confirm('Are you sure?')) {
+              doc.ref.delete();
+              resolve();
+            }
+          }
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
   },
 };

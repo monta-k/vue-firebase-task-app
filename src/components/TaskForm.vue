@@ -19,7 +19,18 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="assigned_user" class="task-form__field__control__select" v-model="task.assigned_user">
+        <select name="progress" class="task-form__field__control__select" v-model="task.progress">
+          <option value='' disabled selected style='display:none;'>進捗</option>
+          <option value="0">ToDo</option>
+          <option value="10">InProgress</option>
+          <option value="20">Done</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="task-form__field">
+      <div class="task-form__field__control">
+        <select name="assigned_user" class="task-form__field__control__select" v-model="task.assigned_user.uid">
           <option value='' disabled selected style='display:none;'>担当者</option>
           <option v-for="user in allUsers" :value="user.uid" :key="user.uid">
             {{ user.name }}
@@ -47,19 +58,10 @@ import Btn from '@/components/Btn.vue';
 import Task from '../modules/task';
 
 export default {
-  data() {
-    return {
-      task: {
-        name: '',
-        priority: '',
-        assigned_user: '',
-        detail: '',
-      },
-    };
-  },
   props: {
     allUsers: Array,
     loginUser: Object,
+    task: Object,
   },
   methods: {
     submitTask() {

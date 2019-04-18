@@ -1,7 +1,7 @@
 <template>
   <div class="edit-page">
     <h2 class="edit-page__title">Edit Task</h2>
-    <task-form :allUsers="allUsers"></task-form>
+    <task-form :allUsers="allUsers" :loginUser="loginUser" :task="showTask"></task-form>
   </div>
 </template>
 
@@ -10,7 +10,14 @@ import TaskForm from '@/components/TaskForm.vue';
 
 export default {
   props: {
-    allUsers: Object,
+    allUsers: Array,
+    loginUser: Object,
+    allTasks: Array,
+  },
+  computed: {
+    showTask() {
+      return this.allTasks.find(task => task.id === this.$route.params.task);
+    },
   },
   components: {
     TaskForm,
