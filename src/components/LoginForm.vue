@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     login() {
-      Auth.googleLogin(this);
+      Auth.googleLogin(this).then(() => this.$router.replace({ name: 'IndexPage' }));
     },
   },
 };
