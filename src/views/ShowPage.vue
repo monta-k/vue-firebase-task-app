@@ -2,14 +2,14 @@
   <div class="show-page" v-if="showTask">
     <card-detail :task="showTask"></card-detail>
     <div class="show-page__foot">
-      <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }"><Btn class="show-page__foot__edit">編集</Btn></router-link>
-      <Btn class="show-page__foot__delete" @click="deleteTask">削除</Btn>
+      <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }"><app-btn class="show-page__foot__edit">編集</app-btn></router-link>
+      <app-btn class="show-page__foot__delete" @click="deleteTask">削除</app-btn>
     </div>
   </div>
 </template>
 
 <script>
-import Btn from '@/components/Btn.vue';
+import AppBtn from '@/components/AppBtn.vue';
 import CardDetail from '@/components/CardDetail.vue';
 import Task from '../modules/task';
 
@@ -23,7 +23,7 @@ export default {
     },
   },
   components: {
-    Btn,
+    AppBtn,
     CardDetail,
   },
   mounted() {

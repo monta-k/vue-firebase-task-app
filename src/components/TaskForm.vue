@@ -47,14 +47,14 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <Btn type="submit" class="task-form__field__control__submit">Submit</Btn>
+        <app-btn type="submit" class="task-form__field__control__submit">Submit</app-btn>
       </div>
     </div>
   </form>
 </template>
 
 <script>
-import Btn from '@/components/Btn.vue';
+import AppBtn from '@/components/AppBtn.vue';
 import Task from '../modules/task';
 
 export default {
@@ -69,7 +69,7 @@ export default {
     },
   },
   components: {
-    Btn,
+    AppBtn,
   },
 };
 </script>

@@ -1,18 +1,18 @@
 <template>
   <div class="login-form">
     <h1 class="login-form__title">Task App</h1>
-    <btn class="login-form__btn" type="button" @click="login">Googleアカウントでログイン</btn>
+    <app-btn class="login-form__btn" type="button" @click="login">Googleアカウントでログイン</app-btn>
   </div>
 </template>
 
 <script>
-import Btn from '@/components/Btn.vue';
+import AppBtn from '@/components/AppBtn.vue';
 import Auth from '../modules/auth';
 
 export default {
   name: 'login-form',
   components: {
-    Btn,
+    AppBtn,
   },
   methods: {
     login() {

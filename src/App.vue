@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <Header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></Header>
-    <loading v-if="loading"></loading>
+    <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></app-header>
+    <app-loading v-if="loading"></app-loading>
     <router-view @loaded="loaded" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-import Loading from '@/components/Loading.vue';
+import AppHeader from '@/components/AppHeader.vue';
+import AppLoading from '@/components/AppLoading.vue';
 import User from './modules/user';
 import Task from './modules/task';
 import firebase from 'firebase';
@@ -49,8 +49,8 @@ export default {
     },
   },
   components: {
-    Header,
-    Loading,
+    AppHeader,
+    AppLoading,
   },
   methods: {
     loaded() {
