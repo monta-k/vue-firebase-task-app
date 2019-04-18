@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     logout() {
-      Auth.logout(this);
+      Auth.logout(this).then(() => this.$router.replace({ name: 'LoginPage' }));
     },
   },
 };

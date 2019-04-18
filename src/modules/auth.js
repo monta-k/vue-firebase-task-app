@@ -17,9 +17,7 @@ export default {
     }
   },
 
-  logout(vm) {
-    firebase.auth().signOut().then(() => {
-      vm.$router.replace({ name: 'LoginPage' });
-    });
+  async logout() {
+    await firebase.auth().signOut();
   },
 };
