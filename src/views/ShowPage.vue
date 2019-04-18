@@ -2,7 +2,7 @@
   <div class="show-page">
     <card-detail :task="showTask"></card-detail>
     <div class="show-page__foot">
-      <router-link to="/task/edit"><Btn class="show-page__foot__edit">編集</Btn></router-link>
+      <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }"><Btn class="show-page__foot__edit">編集</Btn></router-link>
       <Btn class="show-page__foot__delete" @click="deleteTask">削除</Btn>
     </div>
   </div>

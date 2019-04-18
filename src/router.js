@@ -32,7 +32,7 @@ const router = new Router({
       meta: { requiresAuth: true },
     },
     {
-      path: '/task/edit',
+      path: '/task/edit/:task',
       name: 'EditPage',
       component: EditPage,
       meta: { requiresAuth: true },
