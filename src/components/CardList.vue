@@ -36,16 +36,22 @@ import UserIcon from '@/components/UserIcon.vue';
 export default {
   props: {
     allTasks: Array,
+    searchWord: String,
   },
   computed: {
     toDoTask() {
-      return this.allTasks.filter(task => task.progress === '0');
+      return this.searchedTasks.filter(task => task.progress === '0');
     },
     inProgressTask() {
-      return this.allTasks.filter(task => task.progress === '10');
+      return this.searchedTasks.filter(task => task.progress === '10');
     },
     doneTask() {
-      return this.allTasks.filter(task => task.progress === '20');
+      return this.searchedTasks.filter(task => task.progress === '20');
+    },
+    searchedTasks() {
+      return this.allTasks.filter(task => ((task.name.indexOf(this.searchWord) !== -1)
+        || (task.assigned_user.name.indexOf(this.searchWord) !== -1)
+        || (task.registered_user.name.indexOf(this.searchWord) !== -1)));
     },
   },
   components: {
