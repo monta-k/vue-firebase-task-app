@@ -1,29 +1,18 @@
-# task-app
+# タスク管理アプリ
 
-## Project setup
-```
-npm install
-```
+## 概要
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+・Googleログイン機能(初ログイン時にDBにユーザー登録)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+・タスク作成・編集・削除機能
 
-### Run your tests
-```
-npm run test
-```
+・進捗はタスク編集画面で変更可能
 
-### Lints and fixes files
-```
-npm run lint
-```
+・タスク一覧は優先度順
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+・検索フォームに文字を入力すると、タスク名・登録者・担当者のいずれかに部分一致するタスクのみ表示される
+
+
+
+デプロイ先: https://task-app-ea9e8.firebaseapp.com
+
