@@ -7,7 +7,7 @@ export default {
       name: vm.task.name,
       detail: vm.task.detail,
       priority: vm.task.priority,
-      progress: '0',
+      progress: vm.task.progress,
       created_at: now,
       updated_at: now,
       updated_by: vm.loginUser.uid,
