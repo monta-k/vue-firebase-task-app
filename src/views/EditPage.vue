@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-page">
+  <div class="edit-page" v-if="showTask">
     <h2 class="edit-page__title">Edit Task</h2>
     <task-form :allUsers="allUsers" :loginUser="loginUser" :task="showTask"></task-form>
   </div>

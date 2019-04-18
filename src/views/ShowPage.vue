@@ -1,5 +1,5 @@
 <template>
-  <div class="show-page">
+  <div class="show-page" v-if="showTask">
     <card-detail :task="showTask"></card-detail>
     <div class="show-page__foot">
       <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }"><Btn class="show-page__foot__edit">編集</Btn></router-link>
