@@ -11,7 +11,7 @@ export default {
 
   allTasks() {
     const array = [];
-    db.collection('tasks').get().then((querySnapshot) => {
+    db.collection('tasks').orderBy('priority', 'desc').get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = {
           id: doc.id,
