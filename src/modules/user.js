@@ -7,7 +7,7 @@ export default {
   },
 
   async allUsers() {
-    const querySnapshot = await db.collection('users').get()
+    const querySnapshot = await db.collection('users').get();
     return querySnapshot.docs.map((doc) => {
       return {
         uid: doc.data().uid,
@@ -25,7 +25,7 @@ export default {
       });
       console.log('user successfully create!');
     } catch (e) {
-      console.error('Error create user: ', error);
+      console.error('Error create user: ', e);
     }
   },
 };

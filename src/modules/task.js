@@ -63,20 +63,10 @@ export default {
     });
   },
 
-  deleteTask(taskId) {
-    return new Promise((resolve, reject) => {
-      try {
-        db.collection('tasks').doc(taskId).get().then((doc) => {
-          if (doc.exists) {
-            if (window.confirm('Are you sure?')) {
-              doc.ref.delete();
-              resolve();
-            }
-          }
-        });
-      } catch (error) {
-        reject(error);
-      }
-    });
+  async deleteTask(taskId) {
+    const doc = await db.collection('tasks').doc(taskId).get();
+    if (doc.exists) {
+      doc.ref.delete();
+    }
   },
 };

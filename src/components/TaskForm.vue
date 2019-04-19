@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     async submitTask() {
-      try{
+      try {
         await Task.submitTask(this.task, this.loginUser);
         console.log('task successfully update!');
         this.$router.replace('/');
