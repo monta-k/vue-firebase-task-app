@@ -32,7 +32,7 @@ export default {
         this.loginUser.uid = user.uid;
         this.loginUser.name = user.displayName;
         this.loginUser.photo = user.photoURL;
-        this.allUsers = User.allUsers();
+        this.getAllUsers();
         this.allTasks = Task.allTasks();
       } else {
         this.loginUser.uid = '';
@@ -55,6 +55,9 @@ export default {
   methods: {
     loaded() {
       this.loading = false;
+    },
+    async getAllUsers() {
+      this.allUsers = await User.allUsers();
     },
   },
 };

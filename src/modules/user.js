@@ -6,18 +6,14 @@ export default {
     return (querySnapshot.docs.length === 0) ? null : querySnapshot.docs[0].data();
   },
 
-  allUsers() {
-    const array = [];
-    db.collection('users').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const data = {
-          uid: doc.data().uid,
-          name: doc.data().name,
-        };
-        array.push(data);
-      });
+  async allUsers() {
+    const querySnapshot = await db.collection('users').get()
+    return querySnapshot.docs.map((doc) => {
+      return {
+        uid: doc.data().uid,
+        name: doc.data().name,
+      };
     });
-    return array;
   },
 
   createUser(user) {
