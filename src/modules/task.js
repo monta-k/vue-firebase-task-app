@@ -1,11 +1,11 @@
 import db from '../firebaseInit';
 
 export default {
-  submitTask(vm) {
-    if (vm.task.id === undefined) {
-      this.createTask(vm);
+  async submitTask(task, loginUser) {
+    if (task.id === undefined) {
+      await this.createTask(task, loginUser);
     } else {
-      this.updateTask(vm);
+      await this.updateTask(task, loginUser);
     }
   },
 
@@ -33,46 +33,34 @@ export default {
     return array;
   },
 
-  createTask(vm) {
+  async createTask(task, loginUser) {
     const now = Date.now();
-    db.collection('tasks').add({
-      name: vm.task.name,
-      detail: vm.task.detail,
-      priority: vm.task.priority,
-      progress: vm.task.progress,
+    await db.collection('tasks').add({
+      name: task.name,
+      detail: task.detail,
+      priority: task.priority,
+      progress: task.progress,
       created_at: now,
       updated_at: now,
-      updated_by: vm.loginUser.uid,
-      registered_user: vm.loginUser.uid,
-      assigned_user: vm.task.assigned_user.uid,
-    }).then(() => {
-      console.log('task successfully create!');
-      vm.$router.replace('/');
-    })
-      .catch((error) => {
-        console.error('Error create task: ', error);
-      });
+      updated_by: loginUser.uid,
+      registered_user: loginUser.uid,
+      assigned_user: task.assigned_user.uid,
+    });
   },
 
-  updateTask(vm) {
+  async updateTask(task, loginUser) {
     const now = Date.now();
-    db.collection('tasks').doc(vm.task.id).set({
-      name: vm.task.name,
-      detail: vm.task.detail,
-      priority: vm.task.priority,
-      progress: vm.task.progress,
-      created_at: vm.task.created_at,
+    await db.collection('tasks').doc(task.id).set({
+      name: task.name,
+      detail: task.detail,
+      priority: task.priority,
+      progress: task.progress,
+      created_at: task.created_at,
       updated_at: now,
-      updated_by: vm.loginUser.uid,
-      registered_user: vm.loginUser.uid,
-      assigned_user: vm.task.assigned_user.uid,
-    }).then(() => {
-      console.log('task successfully update!');
-      vm.$router.replace('/');
-    })
-      .catch((error) => {
-        console.error('Error update task: ', error);
-      });
+      updated_by: loginUser.uid,
+      registered_user: loginUser.uid,
+      assigned_user: task.assigned_user.uid,
+    });
   },
 
   deleteTask(taskId) {

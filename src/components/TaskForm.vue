@@ -64,8 +64,14 @@ export default {
     task: Object,
   },
   methods: {
-    submitTask() {
-      Task.submitTask(this);
+    async submitTask() {
+      try{
+        await Task.submitTask(this.task, this.loginUser);
+        console.log('task successfully update!');
+        this.$router.replace('/');
+      } catch (e) {
+        console.error('Error update task: ', e);
+      }
     },
   },
   components: {

@@ -24,7 +24,7 @@ export default {
         photo: user.photoURL,
       });
       console.log('user successfully create!');
-    } catch {
+    } catch (e) {
       console.error('Error create user: ', error);
     }
   },
