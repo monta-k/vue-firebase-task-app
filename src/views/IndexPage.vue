@@ -25,9 +25,6 @@ export default {
     AppBtn,
     CardList,
   },
-  mounted() {
-    this.$emit('loaded');
-  },
 };
 </script>
 

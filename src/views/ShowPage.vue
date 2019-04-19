@@ -26,9 +26,6 @@ export default {
     AppBtn,
     CardDetail,
   },
-  mounted() {
-    this.$emit('loaded');
-  },
   methods: {
     async deleteTask() {
       if (window.confirm('タスクを削除してもよろしいですか?')) {

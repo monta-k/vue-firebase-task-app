@@ -11,9 +11,6 @@ export default {
   components: {
     LoginForm,
   },
-  mounted() {
-    this.$emit('loaded');
-  },
 };
 </script>
 
