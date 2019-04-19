@@ -4,7 +4,7 @@
       <p class="card-detail__head__title">{{ task.name }}</p>
       <user-icon class="card-detail__head__user" type="mini" :user="task.registered_user"></user-icon>
     </div>
-    <div class="card-detail__detail"><pre>{{ task.detail }}</pre></div>
+    <div class="card-detail__detail"><p>{{ task.detail }}</p></div>
     <div class="card-detail__foot">
       <p class="card-detail__foot__priority">優先度: {{ priority }}</p>
       <user-icon class="card-detail__foot__user" type="mini" :user="task.assigned_user"></user-icon>
@@ -61,11 +61,14 @@ export default {
         display: inline-block;
         margin: 0;
         padding-top: 10px;
+        width: 80%;
+        text-align: left;
       }
     }
     &__detail {
       text-align: left;
       margin: 20px 0;
+      white-space: pre-wrap;
     }
     &__foot {
       display: flex;

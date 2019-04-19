@@ -1,5 +1,12 @@
 <template>
-  <form  class="task-form" @submit.prevent="submitTask">
+  <form  class="task-form" @submit.prevent="checkForm">
+
+    <div class="task-form__errors" v-if="errors.length">
+      <li class="task-form__errors__message" v-for="error in errors" :key="error">
+        {{ error }}
+      </li>
+    </div>
+
     <div class="task-form__field">
       <div class="task-form__field__control">
         <input class="task-form__field__control__input" type="text" placeholder="タスク名" v-model="task.name">
@@ -58,14 +65,47 @@ import AppBtn from '@/components/AppBtn.vue';
 import Task from '../modules/task';
 
 export default {
+  data() {
+    return {
+      errors: [],
+    }
+  },
   props: {
     allUsers: Array,
     loginUser: Object,
     task: Object,
   },
   methods: {
-    submitTask() {
-      Task.submitTask(this);
+    async submitTask() {
+      try {
+        await Task.submitTask(this.task, this.loginUser);
+        console.log('task successfully update!');
+        this.$router.replace('/');
+      } catch (e) {
+        console.error('Error update task: ', e);
+      }
+    },
+    checkForm() {
+      if (this.task.name && this.task.priority && this.task.progress && this.task.assigned_user.uid && this.task.detail) {
+        this.submitTask();
+      } else {
+        this.errors = [];
+        if (!this.task.name) {
+          this.errors.push('タスク名を入力してください。');
+        }
+        if (!this.task.priority) {
+          this.errors.push('優先度を選択してください。');
+        }
+        if (!this.task.progress) {
+          this.errors.push('進捗を選択してください。');
+        }
+        if (!this.task.assigned_user.uid) {
+          this.errors.push('担当者を選択してください。');
+        }
+        if (!this.task.detail) {
+          this.errors.push('詳細を入力してください。');
+        }
+      }
     },
   },
   components: {
@@ -76,6 +116,12 @@ export default {
 
 <style lang="scss" scoped>
   .task-form {
+    &__errors {
+      color: red;
+      &__message {
+        list-style: none;
+      }
+    }
     &__field {
       padding: 10px 0;
       &__control {

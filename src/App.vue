@@ -2,7 +2,7 @@
   <div id="app">
     <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></app-header>
     <app-loading v-if="loading"></app-loading>
-    <router-view @loaded="loaded" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
+    <router-view v-if="!loading" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
   </div>
 </template>
 
@@ -27,24 +27,27 @@ export default {
     };
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         this.loginUser.uid = user.uid;
         this.loginUser.name = user.displayName;
         this.loginUser.photo = user.photoURL;
-        this.allUsers = User.allUsers();
-        this.allTasks = Task.allTasks();
+        await this.getAllUsers();
+        await this.getAllTasks();
+        this.loading = false;
       } else {
-        this.loginUser.uid = '';
-        this.loginUser.name = '';
-        this.loginUser.photo = '';
+        this.loading = false;
+        this.$router.replace('/login');
       }
     });
   },
   watch: {
-    $route(to) {
+    async $route(to) {
       if (to.path === '/') {
-        this.allTasks = Task.allTasks();
+        this.loading = true;
+        await this.getAllUsers();
+        await this.getAllTasks();
+        this.loading = false;
       }
     },
   },
@@ -53,9 +56,12 @@ export default {
     AppLoading,
   },
   methods: {
-    loaded() {
-      this.loading = false;
+    async getAllUsers() {
+      this.allUsers = await User.allUsers();
     },
+    async getAllTasks() {
+      this.allTasks = await Task.allTasks();
+    }
   },
 };
 </script>

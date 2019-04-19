@@ -26,12 +26,12 @@ export default {
     AppBtn,
     CardDetail,
   },
-  mounted() {
-    this.$emit('loaded');
-  },
   methods: {
-    deleteTask() {
-      Task.deleteTask(this.showTask.id).then(() => { this.$router.replace('/'); });
+    async deleteTask() {
+      if (window.confirm('タスクを削除してもよろしいですか?')) {
+        await Task.deleteTask(this.showTask.id);
+        this.$router.replace('/');
+      }
     },
   },
 };
