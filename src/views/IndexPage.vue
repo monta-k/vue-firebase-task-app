@@ -2,14 +2,14 @@
   <div class="index-page">
     <div class="index-page__head">
       <input type="text" class="index-page__head__search" placeholder="検索" v-model="searchWord">
-      <router-link to="/task/new"><Btn class="index-page__head__btn">Add+</Btn></router-link>
+      <router-link to="/task/new"><app-btn class="index-page__head__btn">Add+</app-btn></router-link>
     </div>
     <card-list :allTasks="allTasks" :searchWord="searchWord"></card-list>
   </div>
 </template>
 
 <script>
-import Btn from '@/components/Btn.vue';
+import AppBtn from '@/components/AppBtn.vue';
 import CardList from '@/components/CardList.vue';
 
 export default {
@@ -22,7 +22,7 @@ export default {
     allTasks: Array,
   },
   components: {
-    Btn,
+    AppBtn,
     CardList,
   },
   mounted() {
