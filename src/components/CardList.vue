@@ -86,6 +86,10 @@ export default {
             margin: 0;
             font-size: 22px;
             padding: 10px;
+            width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           &__user {
             text-align: left;
