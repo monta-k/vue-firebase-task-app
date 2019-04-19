@@ -15,8 +15,9 @@ export default {
     AppBtn,
   },
   methods: {
-    login() {
-      Auth.googleLogin(this).then(() => this.$router.replace({ name: 'IndexPage' }));
+    async login() {
+      await Auth.googleLogin();
+      this.$router.replace({ name: 'IndexPage' });
     },
   },
 };

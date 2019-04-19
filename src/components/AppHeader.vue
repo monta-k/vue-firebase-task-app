@@ -22,8 +22,9 @@ export default {
     UserIcon,
   },
   methods: {
-    logout() {
-      Auth.logout(this).then(() => this.$router.replace({ name: 'LoginPage' }));
+    async logout() {
+      await Auth.logout();
+      this.$router.replace({ name: 'LoginPage' });
     },
   },
 };

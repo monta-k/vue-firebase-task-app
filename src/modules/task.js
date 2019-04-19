@@ -1,4 +1,5 @@
 import db from '../firebaseInit';
+import User from './user';
 
 export default {
   async submitTask(task, loginUser) {
@@ -9,28 +10,22 @@ export default {
     }
   },
 
-  allTasks() {
-    const array = [];
-    db.collection('tasks').orderBy('priority', 'desc').get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const data = {
-          id: doc.id,
-          name: doc.data().name,
-          detail: doc.data().detail,
-          priority: doc.data().priority,
-          progress: doc.data().progress,
-          created_at: doc.data().created_at,
-          updated_at: doc.data().updated_at,
-          updated_by: doc.data().updated_by,
-          registered_user: null,
-          assigned_user: null,
-        };
-        db.doc(`users/${doc.data().registered_user}`).get().then((result) => { data.registered_user = result.data(); });
-        db.doc(`users/${doc.data().assigned_user}`).get().then((result) => { data.assigned_user = result.data(); });
-        array.push(data);
-      });
-    });
-    return array;
+  async allTasks() {
+    const querySnapshot = await db.collection('tasks').orderBy('priority', 'desc').get();
+    return Promise.all(querySnapshot.docs.map(async (doc) => {
+      return {
+        id: doc.id,
+        name: doc.data().name,
+        detail: doc.data().detail,
+        priority: doc.data().priority,
+        progress: doc.data().progress,
+        created_at: doc.data().created_at,
+        updated_at: doc.data().updated_at,
+        updated_by: doc.data().updated_by,
+        registered_user: await User.findUser(doc.data().registered_user),
+        assigned_user: await User.findUser(doc.data().assigned_user),
+      };
+    }));
   },
 
   async createTask(task, loginUser) {
