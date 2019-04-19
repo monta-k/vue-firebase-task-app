@@ -36,6 +36,7 @@ export default {
         await this.getAllTasks();
         this.loading = false;
       } else {
+        this.loading = false;
         this.$router.replace('/login');
       }
     });
