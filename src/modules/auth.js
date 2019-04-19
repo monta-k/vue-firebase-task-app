@@ -10,7 +10,7 @@ export default {
       const findUser = await User.findUser(result.user.uid);
       // 登録されていなかったらユーザー登録処理
       if (findUser == null) {
-        User.createUser(result.user);
+        await User.createUser(result.user);
       }
     } catch (e) {
       console.error(e);

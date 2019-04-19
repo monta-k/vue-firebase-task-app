@@ -16,16 +16,16 @@ export default {
     });
   },
 
-  createUser(user) {
-    db.collection('users').doc(user.uid).set({
-      uid: user.uid,
-      name: user.displayName,
-      photo: user.photoURL,
-    }).then(() => {
-      console.log('user successfully create!');
-    })
-      .catch((error) => {
-        console.error('Error create user: ', error);
+  async createUser(user) {
+    try {
+      await db.collection('users').doc(user.uid).set({
+        uid: user.uid,
+        name: user.displayName,
+        photo: user.photoURL,
       });
+      console.log('user successfully create!');
+    } catch {
+      console.error('Error create user: ', error);
+    }
   },
 };
