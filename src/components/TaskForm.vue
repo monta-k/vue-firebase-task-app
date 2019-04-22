@@ -85,7 +85,7 @@ export default {
     checkForm() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-         this.submitTask();
+          this.submitTask();
         }
       });
     },

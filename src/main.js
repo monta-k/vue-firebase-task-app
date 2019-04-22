@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import App from './App.vue';
 import VeeValidate, { Validator } from 'vee-validate';
-import ja from 'vee-validate/dist/locale/ja'
+import ja from 'vee-validate/dist/locale/ja';
+import App from './App.vue';
 import router from './router';
 
 Vue.config.productionTip = false;
