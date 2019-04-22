@@ -1,7 +1,9 @@
 <template>
   <div class="login-form">
     <h1 class="login-form__title">Task App</h1>
-    <app-btn class="login-form__btn" type="button" @click="login">Googleアカウントでログイン</app-btn>
+    <app-btn class="login-form__btn" type="button" @click="login">
+      <font-awesome-icon :icon="['fab', 'google']" class="login-form__btn__icon"/> Googleアカウントでログイン
+    </app-btn>
   </div>
 </template>
 
@@ -35,6 +37,10 @@ export default {
   }
   &__btn {
     background-color: #DB4437;
+    &__icon {
+      padding-right: 5px;
+      border-right: 2px solid white;
+    }
   }
 }
 </style>

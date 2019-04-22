@@ -1,7 +1,7 @@
 <template>
   <div class="card-list">
     <div class="card-list__section">
-      <h1 class="card-list__section__title">To Do</h1>
+      <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> To Do</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="card-list__section">
-      <h1 class="card-list__section__title">In Progress</h1>
+      <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> In Progress</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="card-list__section">
-      <h1 class="card-list__section__title">Done</h1>
+      <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> Done</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>

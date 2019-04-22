@@ -2,8 +2,10 @@
   <div class="show-page" v-if="showTask">
     <card-detail :task="showTask"></card-detail>
     <div class="show-page__foot">
-      <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }"><app-btn class="show-page__foot__edit">編集</app-btn></router-link>
-      <app-btn class="show-page__foot__delete" @click="deleteTask">削除</app-btn>
+      <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }">
+        <app-btn class="show-page__foot__edit"><font-awesome-icon icon="edit" /> 編集</app-btn>
+      </router-link>
+      <app-btn class="show-page__foot__delete" @click="deleteTask"><font-awesome-icon icon="trash" /> 削除</app-btn>
     </div>
   </div>
 </template>

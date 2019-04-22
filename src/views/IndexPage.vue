@@ -2,7 +2,7 @@
   <div class="index-page">
     <div class="index-page__head">
       <input type="text" class="index-page__head__search" placeholder="検索" v-model="searchWord">
-      <router-link to="/task/new"><app-btn class="index-page__head__btn">Add+</app-btn></router-link>
+      <router-link to="/task/new"><app-btn class="index-page__head__btn">Add <font-awesome-icon icon="plus" /></app-btn></router-link>
     </div>
     <card-list :allTasks="allTasks" :searchWord="searchWord"></card-list>
   </div>
@@ -47,6 +47,10 @@ export default {
         border: none;
         border-bottom: 2px solid $sub-color;
         background-color: rgba(0,0,0,0);
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: inherit;
       }
       &__btn {
         font-size: 18px;
