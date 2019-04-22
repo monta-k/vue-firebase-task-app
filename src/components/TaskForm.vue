@@ -1,21 +1,23 @@
 <template>
-  <form  class="task-form" @submit.prevent="checkForm">
+  <form  class="task-form" @submit.prevent="checkForm()">
 
-    <div class="task-form__errors" v-if="errors.length">
-      <li class="task-form__errors__message" v-for="error in errors" :key="error">
-        {{ error }}
-      </li>
+    <div class="task-form__errors">
+      <li class="task-form__errors__message">{{ errors.first('タスク名') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('優先度') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('進捗') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('担当者') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('詳細') }}</li>
     </div>
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <input class="task-form__field__control__input" type="text" placeholder="タスク名" v-model="task.name">
+        <input class="task-form__field__control__input" name="タスク名" type="text" placeholder="タスク名" v-model="task.name" v-validate="'required'">
       </div>
     </div>
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="priority" class="task-form__field__control__select" v-model="task.priority">
+        <select name="優先度" class="task-form__field__control__select" v-model="task.priority" v-validate="'required'">
           <option value='' disabled selected style='display:none;'>優先度</option>
           <option value="0">低</option>
           <option value="10">中</option>
@@ -26,7 +28,7 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="progress" class="task-form__field__control__select" v-model="task.progress">
+        <select name="進捗" class="task-form__field__control__select" v-model="task.progress" v-validate="'required'">
           <option value='' disabled selected style='display:none;'>進捗</option>
           <option value="0">ToDo</option>
           <option value="10">InProgress</option>
@@ -37,7 +39,7 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="assigned_user" class="task-form__field__control__select" v-model="task.assigned_user.uid">
+        <select name="担当者" class="task-form__field__control__select" v-model="task.assigned_user.uid" v-validate="'required'">
           <option value='' disabled selected style='display:none;'>担当者</option>
           <option v-for="user in allUsers" :value="user.uid" :key="user.uid">
             {{ user.name }}
@@ -48,7 +50,7 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <textarea class="task-form__field__control__text" placeholder="詳細" v-model="task.detail"></textarea>
+        <textarea class="task-form__field__control__text" name="詳細" placeholder="詳細" v-model="task.detail" v-validate="'required'"></textarea>
       </div>
     </div>
 
@@ -65,11 +67,6 @@ import AppBtn from '@/components/AppBtn.vue';
 import Task from '../modules/task';
 
 export default {
-  data() {
-    return {
-      errors: [],
-    }
-  },
   props: {
     allUsers: Array,
     loginUser: Object,
@@ -86,26 +83,11 @@ export default {
       }
     },
     checkForm() {
-      if (this.task.name && this.task.priority && this.task.progress && this.task.assigned_user.uid && this.task.detail) {
-        this.submitTask();
-      } else {
-        this.errors = [];
-        if (!this.task.name) {
-          this.errors.push('タスク名を入力してください。');
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+         this.submitTask();
         }
-        if (!this.task.priority) {
-          this.errors.push('優先度を選択してください。');
-        }
-        if (!this.task.progress) {
-          this.errors.push('進捗を選択してください。');
-        }
-        if (!this.task.assigned_user.uid) {
-          this.errors.push('担当者を選択してください。');
-        }
-        if (!this.task.detail) {
-          this.errors.push('詳細を入力してください。');
-        }
-      }
+      });
     },
   },
   components: {
