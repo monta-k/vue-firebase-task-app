@@ -17,7 +17,7 @@ export default {
     }
   },
 
-  async logout() {
-    await firebase.auth().signOut();
+  logout() {
+    firebase.auth().signOut();
   },
 };
