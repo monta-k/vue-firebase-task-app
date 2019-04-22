@@ -3,7 +3,7 @@
     <router-link to="/"><h2 class="navbar__title">Task App</h2></router-link>
     <div class="navbar__right">
       <UserIcon :user="loginUser"></UserIcon>
-      <app-btn class="navbar__right__btn" type="text" @click="logout">ログアウト</app-btn>
+      <app-btn class="navbar__right__btn" type="text" @click="logout">ログアウト <font-awesome-icon icon="sign-out-alt" /></app-btn>
     </div>
   </header>
 </template>

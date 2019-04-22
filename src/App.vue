@@ -32,8 +32,8 @@ export default {
         this.loginUser.uid = user.uid;
         this.loginUser.name = user.displayName;
         this.loginUser.photo = user.photoURL;
-        await this.getAllUsers();
-        await this.getAllTasks();
+        this.allUsers = await User.allUsers();
+        this.allTasks = await Task.allTasks();
         this.loading = false;
       } else {
         this.loading = false;
@@ -45,8 +45,8 @@ export default {
     async $route(to) {
       if (to.path === '/') {
         this.loading = true;
-        await this.getAllUsers();
-        await this.getAllTasks();
+        this.allUsers = await User.allUsers();
+        this.allTasks = await Task.allTasks();
         this.loading = false;
       }
     },
@@ -54,14 +54,6 @@ export default {
   components: {
     AppHeader,
     AppLoading,
-  },
-  methods: {
-    async getAllUsers() {
-      this.allUsers = await User.allUsers();
-    },
-    async getAllTasks() {
-      this.allTasks = await Task.allTasks();
-    }
   },
 };
 </script>

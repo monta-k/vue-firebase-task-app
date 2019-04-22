@@ -8,12 +8,11 @@ export default {
 
   async allUsers() {
     const querySnapshot = await db.collection('users').get();
-    return querySnapshot.docs.map((doc) => {
-      return {
+    return querySnapshot.docs.map(doc => (
+      {
         uid: doc.data().uid,
         name: doc.data().name,
-      };
-    });
+      }));
   },
 
   async createUser(user) {

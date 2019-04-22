@@ -12,14 +12,13 @@ export default {
 
   async allTasks() {
     const querySnapshot = await db.collection('tasks').orderBy('priority', 'desc').get();
-    return Promise.all(querySnapshot.docs.map(async (doc) => {
-      return {
+    return Promise.all(querySnapshot.docs.map(async doc => (
+      {
         ...doc.data(),
         id: doc.id,
         registered_user: await User.findUser(doc.data().registered_user),
         assigned_user: await User.findUser(doc.data().assigned_user),
-      };
-    }));
+      })));
   },
 
   async createTask(task, loginUser) {
