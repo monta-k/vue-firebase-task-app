@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "task-app-ea9e8"
+    "default": "task-app-ea9e8",
+    "product": "task-app-product"
   }
 }

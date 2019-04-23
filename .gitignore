@@ -21,3 +21,6 @@ yarn-error.log*
 *.sw*
 
 /config
+
+deploy.sh
+/src/firebaseConfig.*.js
