@@ -62,37 +62,39 @@ export default {
 
 <style lang="scss" scoped>
   .card-list {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 15px;
+    margin: 0 252px;
     &__section {
+      grid-column: 4 span;
       &__title {
         width: 70%;
-        margin: 0 auto;
         text-align: left;
         font-weight: bold;
         font-size: 32px;
       }
       &__cards {
         margin: 20px 0px;
+        height: 660px;
+        overflow: auto;
         &__single {
-          margin: 10px auto;
+          margin-bottom: 20px;
           padding: 10px;
           background-color: white;
-          width: 60%;
           border-radius: 10px;
           display: block;
-          display: flex;
-          justify-content: space-between;
           color: $sub-color;
+          text-align: left;
           &__title {
             margin: 0;
             font-size: 22px;
             padding: 10px;
-            width: 80%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
           }
           &__user {
-            text-align: left;
           }
         }
       }
