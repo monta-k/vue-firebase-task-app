@@ -2,25 +2,23 @@
   <form  class="task-form" @submit.prevent="checkForm()">
 
     <div class="task-form__errors">
-      <li class="task-form__errors__message">{{ errors.first('タスク名') }}</li>
-      <li class="task-form__errors__message">{{ errors.first('優先度') }}</li>
-      <li class="task-form__errors__message">{{ errors.first('進捗') }}</li>
-      <li class="task-form__errors__message">{{ errors.first('担当者') }}</li>
-      <li class="task-form__errors__message">{{ errors.first('詳細') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('name') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('priority') }}</li>
+      <li class="task-form__errors__message">{{ errors.first('progress') }}</li>
     </div>
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <input class="task-form__field__control__input" name="タスク名" type="text" placeholder="タスク名" v-model="task.name" v-validate="'required'">
+        <input class="task-form__field__control__input" name="name" type="text" placeholder="タスク名" v-model="task.name" v-validate="'required'">
       </div>
     </div>
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="優先度" class="task-form__field__control__select" v-model="task.priority" v-validate="'required'">
-          <option value='' disabled selected style='display:none;'>優先度</option>
+        <label for="priority" class="task-form__field__control__label">優先度</label>
+        <select name="priority" class="task-form__field__control__select" id="priority" v-model="task.priority" v-validate="'required'">
           <option value="0">低</option>
-          <option value="10">中</option>
+          <option value="10" selected>中</option>
           <option value="20">高</option>
         </select>
       </div>
@@ -28,9 +26,9 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="進捗" class="task-form__field__control__select" v-model="task.progress" v-validate="'required'">
-          <option value='' disabled selected style='display:none;'>進捗</option>
-          <option value="0">ToDo</option>
+        <label for="progress" class="task-form__field__control__label">進捗</label>
+        <select name="progress" class="task-form__field__control__select" id="progress" v-model="task.progress" v-validate="'required'">
+          <option value="0" selected>ToDo</option>
           <option value="10">InProgress</option>
           <option value="20">Done</option>
         </select>
@@ -39,8 +37,9 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <select name="担当者" class="task-form__field__control__select" v-model="task.assigned_user.uid" v-validate="'required'">
-          <option value='' disabled selected style='display:none;'>担当者</option>
+        <label for="assigned_user" class="task-form__field__control__label">担当者</label>
+        <select name="assigned_user" class="task-form__field__control__select" id="assigned_user" v-model="task.assigned_user.uid">
+          <option value=''>担当者なし</option>
           <option v-for="user in allUsers" :value="user.uid" :key="user.uid">
             {{ user.name }}
           </option>
@@ -50,7 +49,7 @@
 
     <div class="task-form__field">
       <div class="task-form__field__control">
-        <textarea class="task-form__field__control__text" name="詳細" placeholder="詳細" v-model="task.detail" v-validate="'required'"></textarea>
+        <textarea class="task-form__field__control__text" name="詳細" placeholder="詳細" v-model="task.detail"></textarea>
       </div>
     </div>
 
@@ -109,6 +108,11 @@ export default {
       &__control {
         margin: 0 auto;
         width: 60%;
+        &__label {
+          width: 10%;
+          display: inline-block;
+          text-align: left;
+        }
         &__input {
           font-size: 16px;
           outline: none;
@@ -122,7 +126,7 @@ export default {
           font-size: 16px;
           outline: none;
           height: 40px;
-          width: 100%;
+          width: 90%;
           border: none;
           border-bottom: 2px solid $sub-color;
           border-radius: 0;

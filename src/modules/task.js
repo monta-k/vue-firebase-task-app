@@ -17,7 +17,7 @@ export default {
         ...doc.data(),
         id: doc.id,
         registered_user: await User.findUser(doc.data().registered_user),
-        assigned_user: await User.findUser(doc.data().assigned_user),
+        assigned_user: await User.findUser(doc.data().assigned_user) || { name: '', photo: '', uid: '' },
       })));
   },
 
