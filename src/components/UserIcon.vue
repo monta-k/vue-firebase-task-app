@@ -1,7 +1,12 @@
 <template>
-  <div :class="classes" v-if="user" v-cloak>
-    <img :class="classes + '__img'" :src="user.photo" alt="">
-    <p :class="classes + '__name'">{{ user.name }}</p>
+  <div :class="classes" v-cloak>
+    <div v-if="user.uid">
+      <img :class="classes + '__img'" :src="user.photo" alt="">
+      <p :class="classes + '__name'">{{ user.name }}</p>
+    </div>
+    <div v-if="!user.uid">
+      <p :class="classes + '__name'">ユーザーなし</p>
+    </div>
   </div>
 </template>
 
