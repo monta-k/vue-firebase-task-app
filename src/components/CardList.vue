@@ -95,10 +95,10 @@ export default {
             border-radius: 10px 0 0 10px;
           }
           .high {
-            background-color: #fb8c93;
+            background-color: #951b24;
             }
           .middle {
-            background-color: #4c92c6;
+            background-color: #f18520;
           }
           &__title {
             margin: 0;
