@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" v-cloak>
+  <div :class="classes">
     <div v-if="user.uid">
       <img :class="classes + '__img'" :src="user.photo" alt="">
       <p :class="classes + '__name'">{{ user.name }}</p>
@@ -41,9 +41,6 @@ export default {
     float: left;
     padding-right: $pr;
     line-height: $lh;
-  }
-  [v-cloak] {
-    display: none;
   }
   .user-icon {
     display: inline-block;
