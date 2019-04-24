@@ -4,6 +4,7 @@
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> To Do</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+          <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -13,6 +14,7 @@
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> In Progress</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+          <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -22,6 +24,7 @@
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> Done</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+          <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -62,37 +65,51 @@ export default {
 
 <style lang="scss" scoped>
   .card-list {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 15px;
+    margin: 0 252px;
     &__section {
+      grid-column: 4 span;
       &__title {
         width: 70%;
-        margin: 0 auto;
         text-align: left;
         font-weight: bold;
         font-size: 32px;
       }
       &__cards {
         margin: 20px 0px;
+        height: 620px;
+        overflow: auto;
         &__single {
-          margin: 10px auto;
-          padding: 10px;
+          margin-bottom: 20px;
           background-color: white;
-          width: 60%;
           border-radius: 10px;
           display: block;
-          display: flex;
-          justify-content: space-between;
           color: $sub-color;
+          text-align: left;
+          &__flag {
+            float: left;
+            width: 10px;
+            height: 85px;
+            border-radius: 10px 0 0 10px;
+          }
+          .high {
+            background-color: #951b24;
+            }
+          .middle {
+            background-color: #f18520;
+          }
           &__title {
             margin: 0;
             font-size: 22px;
             padding: 10px;
-            width: 80%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
           }
           &__user {
-            text-align: left;
+            padding-left: 10px;
           }
         }
       }
