@@ -13,8 +13,8 @@ export default {
     return {
       task: {
         name: '',
-        priority: '',
-        progress: '',
+        priority: '10',
+        progress: '0',
         assigned_user: {
           name: '',
           photo: '',
