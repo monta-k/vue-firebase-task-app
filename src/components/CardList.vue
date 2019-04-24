@@ -4,6 +4,7 @@
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> To Do</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+          <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -13,6 +14,7 @@
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> In Progress</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+          <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -22,6 +24,7 @@
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> Done</h1>
       <div class="card-list__section__cards">
         <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+          <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
@@ -76,16 +79,27 @@ export default {
       }
       &__cards {
         margin: 20px 0px;
-        height: 660px;
+        height: 620px;
         overflow: auto;
         &__single {
           margin-bottom: 20px;
-          padding: 10px;
           background-color: white;
           border-radius: 10px;
           display: block;
           color: $sub-color;
           text-align: left;
+          &__flag {
+            float: left;
+            width: 10px;
+            height: 85px;
+            border-radius: 10px 0 0 10px;
+          }
+          .high {
+            background-color: #fb8c93;
+            }
+          .middle {
+            background-color: #4c92c6;
+          }
           &__title {
             margin: 0;
             font-size: 22px;
@@ -95,6 +109,7 @@ export default {
             white-space: nowrap;
           }
           &__user {
+            padding-left: 10px;
           }
         }
       }

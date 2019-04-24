@@ -34,8 +34,8 @@ export default {
   @mixin name($pr: 10px, $lh: 50px) {
     color: $sub-color;
     float: left;
-    padding-right: 10px;
-    line-height: 50px;
+    padding-right: $pr;
+    line-height: $lh;
   }
   [v-cloak] {
     display: none;
