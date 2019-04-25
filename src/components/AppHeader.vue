@@ -35,8 +35,8 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 70%;
+    padding: 0 15% !important;
     height: 72px;
-    padding: 0 20px;
     position: fixed;
     top: 0;
     z-index: 1;

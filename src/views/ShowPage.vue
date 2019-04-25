@@ -7,17 +7,20 @@
       </router-link>
       <app-btn class="show-page__foot__delete" @click="deleteTask"><font-awesome-icon icon="trash" /> 削除</app-btn>
     </div>
+    <comment-area :task="showTask" :loginUser="loginUser"></comment-area>
   </div>
 </template>
 
 <script>
 import AppBtn from '@/components/AppBtn.vue';
 import CardDetail from '@/components/CardDetail.vue';
+import CommentArea from '@/components/CommentArea';
 import Task from '../modules/task';
 
 export default {
   props: {
     allTasks: Array,
+    loginUser: Object,
   },
   computed: {
     showTask() {
@@ -27,6 +30,7 @@ export default {
   components: {
     AppBtn,
     CardDetail,
+    CommentArea,
   },
   methods: {
     async deleteTask() {
@@ -47,6 +51,7 @@ export default {
     bottom: 0px;
     left: 0px;
     &__foot {
+      margin: 30px 0;
       &__edit {
         font-size: 22px;
         width: 100px;

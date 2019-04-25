@@ -18,6 +18,7 @@ export default {
         id: doc.id,
         registered_user: await User.findUser(doc.data().registered_user),
         assigned_user: await User.findUser(doc.data().assigned_user) || { name: '', photo: '', uid: '' },
+        comments: await this.fetchComments(doc.id),
       })));
   },
 
@@ -30,12 +31,13 @@ export default {
       updated_by: loginUser.uid,
       registered_user: loginUser.uid,
       assigned_user: task.assigned_user.uid,
+      comments: [],
     });
   },
 
   async updateTask(task, loginUser) {
     const now = Date.now();
-    await db.collection('tasks').doc(task.id).set({
+    await db.collection('tasks').doc(task.id).update({
       ...task,
       updated_at: now,
       updated_by: loginUser.uid,
@@ -52,11 +54,24 @@ export default {
   },
 
   updateProgress(task, progress) {
-    db.collection('tasks').doc(task.id).set({
-      ...task,
-      progress,
-      registered_user: task.registered_user.uid,
-      assigned_user: task.assigned_user.uid,
+    db.collection('tasks').doc(task.id).update({ progress });
+  },
+
+  async fetchComments(taskId) {
+    const querySnapshot = await db.collection('tasks').doc(taskId).collection('comments').orderBy('created_at', 'desc').get();
+    return Promise.all(querySnapshot.docs.map(async doc => (
+      {
+        ...doc.data(),
+        id: doc.id,
+        user: await User.findUser(doc.data().user),
+      })));
+  },
+
+  async createComment(task, comment) {
+    const now = Date.now();
+    return await db.collection('tasks').doc(task.id).collection('comments').add({
+      ...comment,
+      created_at: now,
     });
   },
 };
