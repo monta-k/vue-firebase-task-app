@@ -50,4 +50,13 @@ export default {
       doc.ref.delete();
     }
   },
+
+  updateProgress(task, progress) {
+    db.collection('tasks').doc(task.id).set({
+      ...task,
+      progress,
+      registered_user: task.registered_user.uid,
+      assigned_user: task.assigned_user.uid,
+    });
+  },
 };
