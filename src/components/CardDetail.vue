@@ -46,9 +46,10 @@ export default {
 <style lang="scss">
   .card-detail {
     width: 70%;
-    margin: 100px auto 30px auto !important;
+    margin: 100px auto 0 auto !important;
     padding: 20px !important;
     border-radius: 20px;
+    border: 2px solid $sub-color !important;
     background-color: white;
     &__head {
       display: flex;
