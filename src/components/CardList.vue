@@ -2,39 +2,41 @@
   <div class="card-list">
     <div class="card-list__section">
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> To Do</h1>
-      <div class="card-list__section__cards">
+      <draggable element="div" class="card-list__section__cards" :options="{ group: 'tasks' }" v-model="toDoTask">
         <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
-      </div>
+      </draggable>
     </div>
     <div class="card-list__section">
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> In Progress</h1>
-      <div class="card-list__section__cards">
+      <draggable element="div" class="card-list__section__cards" :options="{ group: 'tasks' }" v-model="inProgressTask">
         <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
-      </div>
+      </draggable>
     </div>
     <div class="card-list__section">
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> Done</h1>
-      <div class="card-list__section__cards">
+      <draggable element="div" class="card-list__section__cards" :options="{ group: 'tasks' }" v-model="doneTask">
         <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
         </router-link>
-      </div>
+      </draggable>
     </div>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import UserIcon from '@/components/UserIcon.vue';
+import Task from '../modules/task';
 
 export default {
   props: {
@@ -42,14 +44,29 @@ export default {
     searchWord: String,
   },
   computed: {
-    toDoTask() {
-      return this.searchedTasks.filter(task => task.progress === '0');
+    toDoTask: {
+      get() {
+        return this.searchedTasks.filter(task => task.progress === '0');
+      },
+      set(value) {
+        this.updateProgress(value, '0');
+      },
     },
-    inProgressTask() {
-      return this.searchedTasks.filter(task => task.progress === '10');
+    inProgressTask: {
+      get() {
+        return this.searchedTasks.filter(task => task.progress === '10');
+      },
+      set(value) {
+        this.updateProgress(value, '10');
+      },
     },
-    doneTask() {
-      return this.searchedTasks.filter(task => task.progress === '20');
+    doneTask: {
+      get() {
+        return this.searchedTasks.filter(task => task.progress === '20');
+      },
+      set(value) {
+        this.updateProgress(value, '20');
+      },
     },
     searchedTasks() {
       return this.allTasks.filter(task => ((task.name.indexOf(this.searchWord) !== -1)
@@ -57,8 +74,19 @@ export default {
         || (task.registered_user.name.indexOf(this.searchWord) !== -1)));
     },
   },
+  methods: {
+    updateProgress(tasks, progress) {
+      const updateTask = tasks.find(task => task.progress !== progress);
+      if (updateTask === undefined) {
+        return;
+      }
+      this.allTasks.find(task => task.id === updateTask.id).progress = progress;
+      Task.updateProgress(updateTask, progress);
+    },
+  },
   components: {
     UserIcon,
+    draggable,
   },
 };
 </script>
