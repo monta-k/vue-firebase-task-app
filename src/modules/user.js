@@ -21,6 +21,7 @@ export default {
         uid: user.uid,
         name: user.displayName,
         photo: user.photoURL,
+        admin: false,
       });
       console.log('user successfully create!');
     } catch (e) {

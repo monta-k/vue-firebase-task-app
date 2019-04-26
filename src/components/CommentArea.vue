@@ -39,7 +39,7 @@ export default {
         text: '',
         user: this.loginUser.uid,
       },
-    }
+    };
   },
   props: {
     task: Object,
@@ -68,7 +68,7 @@ export default {
     AppBtn,
     UserIcon,
   },
-}
+};
 </script>
 
 <style lang="scss">
@@ -116,8 +116,6 @@ export default {
           width: 80%;
           white-space: pre-wrap;
           text-align: left;
-        }
-        &__user{
         }
       }
     }

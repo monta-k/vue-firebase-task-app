@@ -14,7 +14,7 @@
 <script>
 import AppBtn from '@/components/AppBtn.vue';
 import CardDetail from '@/components/CardDetail.vue';
-import CommentArea from '@/components/CommentArea';
+import CommentArea from '@/components/CommentArea.vue';
 import Task from '../modules/task';
 
 export default {

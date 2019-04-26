@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></app-header>
+    <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser" @logout="logout"></app-header>
     <app-loading v-if="loading"></app-loading>
     <router-view v-if="!loading" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
   </div>
@@ -9,6 +9,7 @@
 <script>
 import AppHeader from '@/components/AppHeader.vue';
 import AppLoading from '@/components/AppLoading.vue';
+import Auth from './modules/auth';
 import User from './modules/user';
 import Task from './modules/task';
 import firebase from 'firebase';
@@ -17,11 +18,7 @@ export default {
   data() {
     return {
       loading: true,
-      loginUser: {
-        uid: '',
-        name: '',
-        photo: '',
-      },
+      loginUser: {},
       allUsers: [],
       allTasks: [],
     };
@@ -29,9 +26,7 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        this.loginUser.uid = user.uid;
-        this.loginUser.name = user.displayName;
-        this.loginUser.photo = user.photoURL;
+        this.loginUser = await User.findUser(user.uid);
         this.allUsers = await User.allUsers();
         this.allTasks = await Task.allTasks();
         this.loading = false;
@@ -40,6 +35,13 @@ export default {
         this.$router.replace('/login');
       }
     });
+  },
+  methods: {
+    async logout() {
+      await Auth.logout();
+      this.loginUser = {};
+      this.$router.replace({ name: 'LoginPage' });
+    },
   },
   watch: {
     async $route(to) {

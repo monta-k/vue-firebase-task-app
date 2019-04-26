@@ -40,5 +40,6 @@ export default {
     background-color: rgba(0,0,0,0);
     font-size: 16px;
     color: $sub-color;
+    padding: 0px 7px 2px 7px;
   }
 </style>
