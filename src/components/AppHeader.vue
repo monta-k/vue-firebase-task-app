@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$emit('logout')
+      this.$emit('logout');
     },
   },
 };

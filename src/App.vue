@@ -2,7 +2,8 @@
   <div id="app">
     <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser" @logout="logout"></app-header>
     <app-loading v-if="loading"></app-loading>
-    <router-view v-if="!loading" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
+    <h2 v-if="!loading && !available">利用が承認されるまでお待ちください</h2>
+    <router-view v-if="!loading && available" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
   </div>
 </template>
 
@@ -23,10 +24,15 @@ export default {
       allTasks: [],
     };
   },
+  computed: {
+    available() {
+      return (this.loginUser.available || this.$route.name === 'LoginPage');
+    },
+  },
   created() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        this.loginUser = await User.findUser(user.uid);
+        this.loginUser = await User.findUser(user.uid) || await User.createUser(user);
         this.allUsers = await User.allUsers();
         this.allTasks = await Task.allTasks();
         this.loading = false;
@@ -40,6 +46,8 @@ export default {
     async logout() {
       await Auth.logout();
       this.loginUser = {};
+      this.allUsers = [];
+      this.allTasks = [];
       this.$router.replace({ name: 'LoginPage' });
     },
   },

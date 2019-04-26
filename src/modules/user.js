@@ -17,13 +17,18 @@ export default {
 
   async createUser(user) {
     try {
-      await db.collection('users').doc(user.uid).set({
+      const data = {
         uid: user.uid,
         name: user.displayName,
         photo: user.photoURL,
         admin: false,
+        available: false,
+      };
+      await db.collection('users').doc(user.uid).set({
+        ...data,
       });
       console.log('user successfully create!');
+      return data;
     } catch (e) {
       console.error('Error create user: ', e);
     }
