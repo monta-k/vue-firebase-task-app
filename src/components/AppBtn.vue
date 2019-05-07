@@ -1,20 +1,14 @@
 <template>
-  <button :class="classes" style="cursor:pointer" @click="handleClick"><slot /></button>
+  <button :class="this.variation" style="cursor:pointer" @click="handleClick"><slot /></button>
 </template>
 
 <script>
 export default {
   name: 'btn',
   props: {
-    type: {
+    variation: {
       type: String,
-      default: 'button',
-    },
-  },
-  computed: {
-    classes() {
-      const cls = this.type === 'text' ? this.type : 'btn';
-      return cls;
+      default: 'normal',
     },
   },
   methods: {
@@ -26,13 +20,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .btn {
+  @mixin btn() {
     padding: 10px;
     border-radius: 5px;
     font-size: 1rem;
     outline: none;
     color: white;
+  }
+  .normal {
+    @include btn();
     background-color: $sub-color;
+  }
+  .danger {
+    @include btn();
+    background-color: #DB4437;
   }
   .text {
     border: none;
@@ -40,5 +41,6 @@ export default {
     background-color: rgba(0,0,0,0);
     font-size: 16px;
     color: $sub-color;
+    padding: 0px 7px 2px 7px;
   }
 </style>

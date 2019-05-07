@@ -5,7 +5,7 @@
       <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }">
         <app-btn class="show-page__foot__edit"><font-awesome-icon icon="edit" /> 編集</app-btn>
       </router-link>
-      <app-btn class="show-page__foot__delete" @click="deleteTask"><font-awesome-icon icon="trash" /> 削除</app-btn>
+      <app-btn class="show-page__foot__delete" @click="deleteTask" :variation="'danger'"><font-awesome-icon icon="trash" /> 削除</app-btn>
     </div>
     <comment-area :task="showTask" :loginUser="loginUser"></comment-area>
   </div>
@@ -14,7 +14,7 @@
 <script>
 import AppBtn from '@/components/AppBtn.vue';
 import CardDetail from '@/components/CardDetail.vue';
-import CommentArea from '@/components/CommentArea';
+import CommentArea from '@/components/CommentArea.vue';
 import Task from '../modules/task';
 
 export default {
@@ -60,7 +60,6 @@ export default {
       &__delete {
         font-size: 22px;
         width: 100px;
-        background-color: #DB4437;
         margin: 0 70px;
       }
     }

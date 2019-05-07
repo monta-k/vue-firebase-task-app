@@ -2,8 +2,9 @@
   <header class="navbar">
     <router-link to="/"><h2 class="navbar__title">Task App</h2></router-link>
     <div class="navbar__right">
-      <UserIcon :user="loginUser" v-if="loginUser.uid"></UserIcon>
-      <app-btn class="navbar__right__btn" type="text" @click="logout">ログアウト <font-awesome-icon icon="sign-out-alt" /></app-btn>
+      <UserIcon class="navbar__right__icon" :user="loginUser" v-if="loginUser.uid"></UserIcon>
+      <router-link class="navbar__right__link" to="/users" v-if="loginUser.admin">ユーザー管理</router-link>
+      <app-btn class="navbar__right__btn" variation="text" @click="logout">ログアウト <font-awesome-icon icon="sign-out-alt" /></app-btn>
     </div>
   </header>
 </template>
@@ -11,7 +12,6 @@
 <script>
 import AppBtn from '@/components/AppBtn.vue';
 import UserIcon from '@/components/UserIcon.vue';
-import Auth from '../modules/auth';
 
 export default {
   props: {
@@ -22,9 +22,8 @@ export default {
     UserIcon,
   },
   methods: {
-    async logout() {
-      await Auth.logout();
-      this.$router.replace({ name: 'LoginPage' });
+    logout() {
+      this.$emit('logout');
     },
   },
 };
@@ -51,8 +50,10 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      &__btn {
-        border-left: 1px solid $sub-color !important;
+      &__link {
+        text-decoration: none;
+        color: $sub-color;
+        padding-left: 10px;
       }
     }
   }

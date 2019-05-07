@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser"></app-header>
+    <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser" @logout="logout"></app-header>
     <app-loading v-if="loading"></app-loading>
-    <router-view v-if="!loading" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
+    <h2 v-if="!loading && !available">利用が承認されるまでお待ちください</h2>
+    <router-view v-if="!loading && available" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
   </div>
 </template>
 
 <script>
 import AppHeader from '@/components/AppHeader.vue';
 import AppLoading from '@/components/AppLoading.vue';
+import Auth from './modules/auth';
 import User from './modules/user';
 import Task from './modules/task';
 import firebase from 'firebase';
@@ -17,21 +19,20 @@ export default {
   data() {
     return {
       loading: true,
-      loginUser: {
-        uid: '',
-        name: '',
-        photo: '',
-      },
+      loginUser: {},
       allUsers: [],
       allTasks: [],
     };
   },
+  computed: {
+    available() {
+      return (this.loginUser.available || this.$route.name === 'LoginPage');
+    },
+  },
   created() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        this.loginUser.uid = user.uid;
-        this.loginUser.name = user.displayName;
-        this.loginUser.photo = user.photoURL;
+        this.loginUser = await User.findUser(user.uid) || await User.createUser(user);
         this.allUsers = await User.allUsers();
         this.allTasks = await Task.allTasks();
         this.loading = false;
@@ -40,6 +41,15 @@ export default {
         this.$router.replace('/login');
       }
     });
+  },
+  methods: {
+    async logout() {
+      await Auth.logout();
+      this.loginUser = {};
+      this.allUsers = [];
+      this.allTasks = [];
+      this.$router.replace({ name: 'LoginPage' });
+    },
   },
   watch: {
     async $route(to) {
