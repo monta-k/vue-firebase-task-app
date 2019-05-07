@@ -31,7 +31,6 @@ export default {
       updated_by: loginUser.uid,
       registered_user: loginUser.uid,
       assigned_user: task.assigned_user.uid,
-      comments: [],
     });
   },
 
@@ -49,6 +48,7 @@ export default {
   async deleteTask(taskId) {
     const doc = await db.collection('tasks').doc(taskId).get();
     if (doc.exists) {
+      this.deleteTaskComments(taskId);
       doc.ref.delete();
     }
   },
@@ -80,5 +80,14 @@ export default {
     if (doc.exists) {
       doc.ref.delete();
     }
+  },
+
+  async deleteTaskComments(taskId) {
+    const querySnapshot = await db.collection('tasks').doc(taskId).collection('comments').get();
+    await querySnapshot.docs.forEach((doc) => {
+      if (doc.exists) {
+        doc.ref.delete();
+      }
+    });
   },
 };
