@@ -110,6 +110,7 @@ export default {
         height: 620px;
         overflow: auto;
         &__single {
+          position: relative;
           margin-bottom: 20px;
           background-color: white;
           border-radius: 10px;
@@ -117,9 +118,11 @@ export default {
           color: $sub-color;
           text-align: left;
           &__flag {
+            position: absolute;
             float: left;
             width: 10px;
-            height: 85px;
+            height: 100%;
+            margin-right: 5px;
             border-radius: 10px 0 0 10px;
           }
           .high {
@@ -130,14 +133,16 @@ export default {
           }
           &__title {
             margin: 0;
-            font-size: 22px;
-            padding: 10px;
+            font-size: 18px;
+            line-height: 1.5rem;
+            padding: 10px 0 0 15px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
           }
           &__user {
-            padding-left: 10px;
+            padding-left: 15px;
           }
         }
       }
