@@ -6,6 +6,7 @@ import IndexPage from './views/IndexPage.vue';
 import NewPage from './views/NewPage.vue';
 import EditPage from './views/EditPage.vue';
 import ShowPage from './views/ShowPage.vue';
+import UserIndexPage from './views/UserIndexPage.vue';
 
 Vue.use(Router);
 
@@ -41,6 +42,12 @@ const router = new Router({
       path: '/task/:task',
       name: 'ShowPage',
       component: ShowPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/users',
+      name: 'UserIndexPage',
+      component: UserIndexPage,
       meta: { requiresAuth: true },
     },
     {

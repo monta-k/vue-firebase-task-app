@@ -10,8 +10,7 @@ export default {
     const querySnapshot = await db.collection('users').get();
     return querySnapshot.docs.map(doc => (
       {
-        uid: doc.data().uid,
-        name: doc.data().name,
+        ...doc.data(),
       }));
   },
 
@@ -32,5 +31,18 @@ export default {
     } catch (e) {
       console.error('Error create user: ', e);
     }
+  },
+
+  async deleteUser(user) {
+    const doc = await db.collection('users').doc(user).get();
+    if (doc.exists) {
+      doc.ref.delete();
+    }
+  },
+
+  async registerUser(user) {
+    await db.collection('users').doc(user).update({
+      available: true,
+    });
   },
 };
