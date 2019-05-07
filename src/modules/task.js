@@ -53,8 +53,8 @@ export default {
     }
   },
 
-  updateProgress(task, progress) {
-    db.collection('tasks').doc(task.id).update({ progress });
+  updateProgress(taskId, progress) {
+    db.collection('tasks').doc(taskId).update({ progress });
   },
 
   async fetchComments(taskId) {
@@ -67,11 +67,18 @@ export default {
       })));
   },
 
-  async createComment(task, comment) {
+  async createComment(taskId, comment) {
     const now = Date.now();
-    return await db.collection('tasks').doc(task.id).collection('comments').add({
+    return await db.collection('tasks').doc(taskId).collection('comments').add({
       ...comment,
       created_at: now,
     });
+  },
+
+  async deleteComment(taskId, commentId) {
+    const doc = await db.collection('tasks').doc(taskId).collection('comments').doc(commentId).get();
+    if (doc.exists) {
+      doc.ref.delete();
+    }
   },
 };

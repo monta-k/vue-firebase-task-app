@@ -81,7 +81,7 @@ export default {
         return;
       }
       this.allTasks.find(task => task.id === updateTask.id).progress = progress;
-      Task.updateProgress(updateTask, progress);
+      Task.updateProgress(updateTask.id, progress);
     },
   },
   components: {

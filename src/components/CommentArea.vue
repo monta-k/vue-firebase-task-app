@@ -20,6 +20,7 @@
 
     <ul class="comment-area__list">
       <li class="comment-area__list__detail" v-for="comment in task.comments" :key="comment.id">
+        <font-awesome-icon icon="trash" style="cursor:pointer" @click="deleteComment(comment.id)" v-if="loginUser.admin === true" />
         <p class="comment-area__list__detail__text">{{ comment.text }}</p>
         <user-icon class="comment-area__list__detail__user" type="mini" :user="comment.user"></user-icon>
       </li>
@@ -47,7 +48,7 @@ export default {
   },
   methods: {
     async submitComment() {
-      const add_comment = await Task.createComment(this.task, this.new_comment);
+      const add_comment = await Task.createComment(this.task.id, this.new_comment);
       await this.task.comments.unshift({
         ...this.new_comment,
         user: this.loginUser,
@@ -62,6 +63,12 @@ export default {
           this.submitComment();
         }
       });
+    },
+    async deleteComment(commentId) {
+      if (window.confirm('コメントを削除してもよろしいですか?')) {
+        await Task.deleteComment(this.task.id, commentId);
+        this.task.comments = this.task.comments.filter(comment => comment.id !== commentId);
+      }
     },
   },
   components: {
