@@ -31,7 +31,6 @@ export default {
       updated_by: loginUser.uid,
       registered_user: loginUser.uid,
       assigned_user: task.assigned_user.uid,
-      comments: [],
     });
   },
 
@@ -49,12 +48,13 @@ export default {
   async deleteTask(taskId) {
     const doc = await db.collection('tasks').doc(taskId).get();
     if (doc.exists) {
+      this.deleteTaskComments(taskId);
       doc.ref.delete();
     }
   },
 
-  updateProgress(task, progress) {
-    db.collection('tasks').doc(task.id).update({ progress });
+  updateProgress(taskId, progress) {
+    db.collection('tasks').doc(taskId).update({ progress });
   },
 
   async fetchComments(taskId) {
@@ -67,11 +67,27 @@ export default {
       })));
   },
 
-  async createComment(task, comment) {
+  async createComment(taskId, comment) {
     const now = Date.now();
-    return await db.collection('tasks').doc(task.id).collection('comments').add({
+    return await db.collection('tasks').doc(taskId).collection('comments').add({
       ...comment,
       created_at: now,
+    });
+  },
+
+  async deleteComment(taskId, commentId) {
+    const doc = await db.collection('tasks').doc(taskId).collection('comments').doc(commentId).get();
+    if (doc.exists) {
+      doc.ref.delete();
+    }
+  },
+
+  async deleteTaskComments(taskId) {
+    const querySnapshot = await db.collection('tasks').doc(taskId).collection('comments').get();
+    await querySnapshot.docs.forEach((doc) => {
+      if (doc.exists) {
+        doc.ref.delete();
+      }
     });
   },
 };

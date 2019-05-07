@@ -3,7 +3,7 @@
     <form class="comment-area__form" @submit.prevent="checkForm()">
       <div class="comment-area__form__field">
         <div class="comment-area__form__field__control">
-          <textarea class="comment-area__form__field__control__text" name="comment" placeholder="コメント" v-model="new_comment.text" v-validate="'required'"></textarea>
+          <textarea class="comment-area__form__field__control__text" name="comment" placeholder="コメント" v-model="newComment.text" v-validate="'required'"></textarea>
         </div>
       </div>
 
@@ -20,6 +20,7 @@
 
     <ul class="comment-area__list">
       <li class="comment-area__list__detail" v-for="comment in task.comments" :key="comment.id">
+        <font-awesome-icon icon="trash" style="cursor:pointer" @click="deleteComment(comment.id)" v-if="loginUser.admin === true" />
         <p class="comment-area__list__detail__text">{{ comment.text }}</p>
         <user-icon class="comment-area__list__detail__user" type="mini" :user="comment.user"></user-icon>
       </li>
@@ -35,7 +36,7 @@ import Task from '../modules/task';
 export default {
   data() {
     return {
-      new_comment: {
+      newComment: {
         text: '',
         user: this.loginUser.uid,
       },
@@ -47,13 +48,13 @@ export default {
   },
   methods: {
     async submitComment() {
-      const add_comment = await Task.createComment(this.task, this.new_comment);
+      const addComment = await Task.createComment(this.task.id, this.newComment);
       await this.task.comments.unshift({
-        ...this.new_comment,
+        ...this.newComment,
         user: this.loginUser,
-        id: add_comment.id,
+        id: addComment.id,
       });
-      this.new_comment.text = '';
+      this.newComment.text = '';
       this.$validator.reset();
     },
     checkForm() {
@@ -62,6 +63,12 @@ export default {
           this.submitComment();
         }
       });
+    },
+    async deleteComment(commentId) {
+      if (window.confirm('コメントを削除してもよろしいですか?')) {
+        await Task.deleteComment(this.task.id, commentId);
+        this.task.comments = this.task.comments.filter(comment => comment.id !== commentId);
+      }
     },
   },
   components: {

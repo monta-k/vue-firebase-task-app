@@ -71,10 +71,16 @@ export default {
     loginUser: Object,
     task: Object,
   },
+  computed: {
+    editedTask() {
+      const { comments, ...result } = this.task;
+      return result;
+    },
+  },
   methods: {
     async submitTask() {
       try {
-        await Task.submitTask(this.task, this.loginUser);
+        await Task.submitTask(this.editedTask, this.loginUser);
         console.log('task successfully update!');
         this.$router.replace('/');
       } catch (e) {
