@@ -44,6 +44,7 @@ export default {
   }
   .user-icon {
     display: inline-block;
+    margin: auto 0;
     &__img {
       @include img();
     }
@@ -53,6 +54,7 @@ export default {
   }
   .user-icon-mini {
     display: inline-block;
+    margin: auto 0;
     &__img {
       @include img(40px, 40px);
     }

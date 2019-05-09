@@ -1,4 +1,4 @@
-import db from '../firebaseInit';
+import { db } from '../firebaseInit';
 
 export default {
   async findUser(userId) {

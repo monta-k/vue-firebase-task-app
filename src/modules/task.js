@@ -1,12 +1,14 @@
-import db from '../firebaseInit';
+import { db } from '../firebaseInit';
 import User from './user';
+import Uploader from './uploader';
 
 export default {
   async submitTask(task, loginUser) {
     if (task.id === undefined) {
-      await this.createTask(task, loginUser);
+      return await this.createTask(task, loginUser);
     } else {
       await this.updateTask(task, loginUser);
+      return task;
     }
   },
 
@@ -19,12 +21,13 @@ export default {
         registered_user: await User.findUser(doc.data().registered_user),
         assigned_user: await User.findUser(doc.data().assigned_user) || { name: '', photo: '', uid: '' },
         comments: await this.fetchComments(doc.id),
+        files: await Uploader.fetchFiles(doc.id),
       })));
   },
 
   async createTask(task, loginUser) {
     const now = Date.now();
-    await db.collection('tasks').add({
+    return await db.collection('tasks').add({
       ...task,
       created_at: now,
       updated_at: now,

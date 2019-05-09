@@ -1,5 +1,5 @@
 <template>
-  <form  class="task-form" @submit.prevent="checkForm()">
+  <form  class="task-form" autocomplete="off" @submit.prevent="checkForm()">
 
     <div class="task-form__errors">
       <li class="task-form__errors__message">{{ errors.first('name') }}</li>
@@ -53,6 +53,13 @@
       </div>
     </div>
 
+    <div class="task-form__file">
+      <input class="task-form__file__form" type="file" @change="selectFile">
+      <li v-for="file in task.files" :key="file.id">
+        <a :href="file.path" target="__blank">{{ file.name }}</a>
+      </li>
+    </div>
+
     <div class="task-form__field">
       <div class="task-form__field__control">
         <app-btn type="submit" class="task-form__field__control__submit">Submit</app-btn>
@@ -64,8 +71,14 @@
 <script>
 import AppBtn from '@/components/AppBtn.vue';
 import Task from '../modules/task';
+import Uploader from '../modules/uploader';
 
 export default {
+  data() {
+    return {
+      uploadFile: null,
+    };
+  },
   props: {
     allUsers: Array,
     loginUser: Object,
@@ -73,14 +86,17 @@ export default {
   },
   computed: {
     editedTask() {
-      const { comments, ...result } = this.task;
+      const { comments, files, ...result } = this.task;
       return result;
     },
   },
   methods: {
     async submitTask() {
       try {
-        await Task.submitTask(this.editedTask, this.loginUser);
+        const submitedTask = await Task.submitTask(this.editedTask, this.loginUser);
+        if (this.uploadFile) {
+          await Uploader.fileUpload(submitedTask.id, this.uploadFile);
+        }
         console.log('task successfully update!');
         this.$router.replace('/');
       } catch (e) {
@@ -93,6 +109,10 @@ export default {
           this.submitTask();
         }
       });
+    },
+    selectFile(e) {
+      const [targetFile] = e.target.files;
+      this.uploadFile = targetFile;
     },
   },
   components: {
@@ -146,6 +166,15 @@ export default {
           border: 2px solid $sub-color;
           border-radius: 5px;
         }
+      }
+    }
+    &__file {
+      margin: 0 auto;
+      width: 60%;
+      text-align: left;
+      &__form {
+        display: block;
+        margin: 5px 0;
       }
     }
   }

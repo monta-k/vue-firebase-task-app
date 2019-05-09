@@ -5,6 +5,13 @@
       <user-icon class="card-detail__head__user" type="mini" :user="task.registered_user"></user-icon>
     </div>
     <div class="card-detail__detail"><p>{{ task.detail }}</p></div>
+
+    <div class="card-detail__files">
+      <li v-for="file in task.files" :key="file.id">
+        <a :href="file.path" target="__blank">{{ file.name }}</a>
+      </li>
+    </div>
+
     <div class="card-detail__foot">
       <p class="card-detail__foot__priority">優先度: {{ priority }}</p>
       <user-icon class="card-detail__foot__user" type="mini" :user="task.assigned_user"></user-icon>
@@ -55,7 +62,6 @@ export default {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      border-bottom: 1px solid $sub-color;
       padding: 10px 0;
       &__title {
         font-size: 22px;
@@ -69,12 +75,17 @@ export default {
     &__detail {
       text-align: left;
       margin: 20px 0;
+      padding: 5px;
       white-space: pre-wrap;
+      border-top: 1px solid $sub-color;
+      border-bottom: 1px solid $sub-color;
+    }
+    &__files {
+      text-align: left;
     }
     &__foot {
       display: flex;
       justify-content: flex-end;
-      border-top: 1px solid $sub-color;
       padding: 10px 0;
       &__priority {
         margin-right: 20px;
