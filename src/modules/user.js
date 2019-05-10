@@ -30,6 +30,7 @@ export default {
       return data
     } catch (e) {
       console.error('Error create user: ', e)
+      return null
     }
   },
 

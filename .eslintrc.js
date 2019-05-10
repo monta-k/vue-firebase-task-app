@@ -26,5 +26,13 @@ module.exports = {
     'no-unreachable': 'error',
     'no-shadow': ['error', { allow: ['state'] }],
     'no-param-reassign': ['error', { props: false }],
+    'import/no-extraneous-dependencies': ['off'],
+  },
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: require.resolve('@vue/cli-service/webpack.config.js'),
+      },
+    },
   },
 }

@@ -5,7 +5,7 @@ import Uploader from './uploader'
 export default {
   async submitTask(task, loginUser) {
     if (task.id === undefined) {
-      return await this.createTask(task, loginUser)
+      return this.createTask(task, loginUser)
     }
     await this.updateTask(task, loginUser)
     return task
@@ -26,7 +26,7 @@ export default {
 
   async createTask(task, loginUser) {
     const now = Date.now()
-    return await db.collection('tasks').add({
+    return db.collection('tasks').add({
       ...task,
       created_at: now,
       updated_at: now,
@@ -72,7 +72,7 @@ export default {
 
   async createComment(taskId, comment) {
     const now = Date.now()
-    return await db.collection('tasks').doc(taskId).collection('comments').add({
+    return db.collection('tasks').doc(taskId).collection('comments').add({
       ...comment,
       created_at: now,
     })
