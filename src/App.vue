@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader.vue';
-import AppLoading from '@/components/AppLoading.vue';
-import Auth from './modules/auth';
-import User from './modules/user';
-import Task from './modules/task';
-import firebase from 'firebase';
+import AppHeader from '@/components/AppHeader.vue'
+import AppLoading from '@/components/AppLoading.vue'
+import Auth from './modules/auth'
+import User from './modules/user'
+import Task from './modules/task'
+import firebase from 'firebase'
 
 export default {
   data() {
@@ -22,42 +22,42 @@ export default {
       loginUser: {},
       allUsers: [],
       allTasks: [],
-    };
+    }
   },
   computed: {
     available() {
-      return (this.loginUser.available || this.$route.name === 'LoginPage');
+      return (this.loginUser.available || this.$route.name === 'LoginPage')
     },
   },
   created() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        this.loginUser = await User.findUser(user.uid) || await User.createUser(user);
-        this.allUsers = await User.allUsers();
-        this.allTasks = await Task.allTasks();
-        this.loading = false;
+        this.loginUser = await User.findUser(user.uid) || await User.createUser(user)
+        this.allUsers = await User.allUsers()
+        this.allTasks = await Task.allTasks()
+        this.loading = false
       } else {
-        this.loading = false;
-        this.$router.replace('/login');
+        this.loading = false
+        this.$router.replace('/login')
       }
-    });
+    })
   },
   methods: {
     async logout() {
-      await Auth.logout();
-      this.loginUser = {};
-      this.allUsers = [];
-      this.allTasks = [];
-      this.$router.replace({ name: 'LoginPage' });
+      await Auth.logout()
+      this.loginUser = {}
+      this.allUsers = []
+      this.allTasks = []
+      this.$router.replace({ name: 'LoginPage' })
     },
   },
   watch: {
     async $route(to) {
       if (to.path === '/') {
-        this.loading = true;
-        this.allUsers = await User.allUsers();
-        this.allTasks = await Task.allTasks();
-        this.loading = false;
+        this.loading = true
+        this.allUsers = await User.allUsers()
+        this.allTasks = await Task.allTasks()
+        this.loading = false
       }
     },
   },
@@ -65,7 +65,7 @@ export default {
     AppHeader,
     AppLoading,
   },
-};
+}
 </script>
 
 <style lang="scss">

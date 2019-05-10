@@ -21,11 +21,11 @@ export default {
   },
   computed: {
     classes() {
-      const cls = this.type === 'mini' ? 'user-icon-mini' : 'user-icon';
-      return cls;
+      const cls = this.type === 'mini' ? 'user-icon-mini' : 'user-icon'
+      return cls
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
@@ -44,6 +44,7 @@ export default {
   }
   .user-icon {
     display: inline-block;
+    margin: auto 0;
     &__img {
       @include img();
     }
@@ -53,6 +54,7 @@ export default {
   }
   .user-icon-mini {
     display: inline-block;
+    margin: auto 0;
     &__img {
       @include img(40px, 40px);
     }

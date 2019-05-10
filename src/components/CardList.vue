@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-import UserIcon from '@/components/UserIcon.vue';
-import Task from '../modules/task';
+import draggable from 'vuedraggable'
+import UserIcon from '@/components/UserIcon.vue'
+import Task from '../modules/task'
 
 export default {
   props: {
@@ -46,49 +46,49 @@ export default {
   computed: {
     toDoTask: {
       get() {
-        return this.searchedTasks.filter(task => task.progress === '0');
+        return this.searchedTasks.filter(task => task.progress === '0')
       },
       set(value) {
-        this.updateProgress(value, '0');
+        this.updateProgress(value, '0')
       },
     },
     inProgressTask: {
       get() {
-        return this.searchedTasks.filter(task => task.progress === '10');
+        return this.searchedTasks.filter(task => task.progress === '10')
       },
       set(value) {
-        this.updateProgress(value, '10');
+        this.updateProgress(value, '10')
       },
     },
     doneTask: {
       get() {
-        return this.searchedTasks.filter(task => task.progress === '20');
+        return this.searchedTasks.filter(task => task.progress === '20')
       },
       set(value) {
-        this.updateProgress(value, '20');
+        this.updateProgress(value, '20')
       },
     },
     searchedTasks() {
       return this.allTasks.filter(task => ((task.name.indexOf(this.searchWord) !== -1)
         || (task.assigned_user.name.indexOf(this.searchWord) !== -1)
-        || (task.registered_user.name.indexOf(this.searchWord) !== -1)));
+        || (task.registered_user.name.indexOf(this.searchWord) !== -1)))
     },
   },
   methods: {
     updateProgress(tasks, progress) {
-      const updateTask = tasks.find(task => task.progress !== progress);
+      const updateTask = tasks.find(task => task.progress !== progress)
       if (updateTask === undefined) {
-        return;
+        return
       }
-      this.allTasks.find(task => task.id === updateTask.id).progress = progress;
-      Task.updateProgress(updateTask.id, progress);
+      this.allTasks.find(task => task.id === updateTask.id).progress = progress
+      Task.updateProgress(updateTask.id, progress)
     },
   },
   components: {
     UserIcon,
     draggable,
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import AppBtn from '@/components/AppBtn.vue';
-import UserIcon from '@/components/UserIcon.vue';
-import Task from '../modules/task';
+import AppBtn from '@/components/AppBtn.vue'
+import UserIcon from '@/components/UserIcon.vue'
+import Task from '../modules/task'
 
 export default {
   data() {
@@ -40,7 +40,7 @@ export default {
         text: '',
         user: this.loginUser.uid,
       },
-    };
+    }
   },
   props: {
     task: Object,
@@ -48,26 +48,26 @@ export default {
   },
   methods: {
     async submitComment() {
-      const addComment = await Task.createComment(this.task.id, this.newComment);
+      const addComment = await Task.createComment(this.task.id, this.newComment)
       await this.task.comments.unshift({
         ...this.newComment,
         user: this.loginUser,
         id: addComment.id,
-      });
-      this.newComment.text = '';
-      this.$validator.reset();
+      })
+      this.newComment.text = ''
+      this.$validator.reset()
     },
     checkForm() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          this.submitComment();
+          this.submitComment()
         }
-      });
+      })
     },
     async deleteComment(commentId) {
       if (window.confirm('コメントを削除してもよろしいですか?')) {
-        await Task.deleteComment(this.task.id, commentId);
-        this.task.comments = this.task.comments.filter(comment => comment.id !== commentId);
+        await Task.deleteComment(this.task.id, commentId)
+        this.task.comments = this.task.comments.filter(comment => comment.id !== commentId)
       }
     },
   },
@@ -75,7 +75,7 @@ export default {
     AppBtn,
     UserIcon,
   },
-};
+}
 </script>
 
 <style lang="scss">

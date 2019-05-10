@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import AppBtn from '@/components/AppBtn.vue';
-import UserIcon from '@/components/UserIcon.vue';
+import AppBtn from '@/components/AppBtn.vue'
+import UserIcon from '@/components/UserIcon.vue'
 
 export default {
   props: {
@@ -23,10 +23,10 @@ export default {
   },
   methods: {
     logout() {
-      this.$emit('logout');
+      this.$emit('logout')
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

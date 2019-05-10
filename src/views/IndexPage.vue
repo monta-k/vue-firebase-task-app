@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import AppBtn from '@/components/AppBtn.vue';
-import CardList from '@/components/CardList.vue';
+import AppBtn from '@/components/AppBtn.vue'
+import CardList from '@/components/CardList.vue'
 
 export default {
   data() {
     return {
       searchWord: '',
-    };
+    }
   },
   props: {
     allTasks: Array,
@@ -27,7 +27,7 @@ export default {
     AppBtn,
     CardList,
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
