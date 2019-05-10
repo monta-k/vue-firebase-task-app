@@ -1,6 +1,6 @@
 <template>
   <div class="show-page" v-if="showTask">
-    <card-detail :task="showTask"></card-detail>
+    <card-detail :task="showTask" :loginUser="loginUser"></card-detail>
     <div class="show-page__foot">
       <router-link :to="{ name: 'EditPage', params: { task: showTask.id } }">
         <app-btn class="show-page__foot__edit"><font-awesome-icon icon="edit" /> 編集</app-btn>

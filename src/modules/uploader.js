@@ -12,6 +12,15 @@ export default {
     })
   },
 
+  async fileDelete(taskId, file) {
+    const storageRef = storage.ref().child(`${taskId}/${file.name}`)
+    await storageRef.delete()
+    const doc = await db.collection('tasks').doc(taskId).collection('files').doc(file.id).get()
+    if (doc.exists) {
+      doc.ref.delete()
+    }
+  },
+
   async fetchFiles(taskId) {
     const querySnapshot = await db.collection('tasks').doc(taskId).collection('files').get()
     return querySnapshot.docs.map(doc => (
