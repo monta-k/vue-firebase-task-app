@@ -5,4 +5,4 @@ export default {
   projectId: 'task-app-ea9e8',
   storageBucket: 'task-app-ea9e8.appspot.com',
   messagingSenderId: '938136653077',
-};
+}

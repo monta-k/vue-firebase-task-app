@@ -69,15 +69,15 @@
 </template>
 
 <script>
-import AppBtn from '@/components/AppBtn.vue';
-import Task from '../modules/task';
-import Uploader from '../modules/uploader';
+import AppBtn from '@/components/AppBtn.vue'
+import Task from '../modules/task'
+import Uploader from '../modules/uploader'
 
 export default {
   data() {
     return {
       uploadFile: null,
-    };
+    }
   },
   props: {
     allUsers: Array,
@@ -86,39 +86,39 @@ export default {
   },
   computed: {
     editedTask() {
-      const { comments, files, ...result } = this.task;
-      return result;
+      const { comments, files, ...result } = this.task
+      return result
     },
   },
   methods: {
     async submitTask() {
       try {
-        const submitedTask = await Task.submitTask(this.editedTask, this.loginUser);
+        const submitedTask = await Task.submitTask(this.editedTask, this.loginUser)
         if (this.uploadFile) {
-          await Uploader.fileUpload(submitedTask.id, this.uploadFile);
+          await Uploader.fileUpload(submitedTask.id, this.uploadFile)
         }
-        console.log('task successfully update!');
-        this.$router.replace('/');
+        console.log('task successfully update!')
+        this.$router.replace('/')
       } catch (e) {
-        console.error('Error update task: ', e);
+        console.error('Error update task: ', e)
       }
     },
     checkForm() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          this.submitTask();
+          this.submitTask()
         }
-      });
+      })
     },
     selectFile(e) {
-      const [targetFile] = e.target.files;
-      this.uploadFile = targetFile;
+      const [targetFile] = e.target.files
+      this.uploadFile = targetFile
     },
   },
   components: {
     AppBtn,
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

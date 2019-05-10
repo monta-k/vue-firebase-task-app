@@ -1,14 +1,14 @@
-import Vue from 'vue';
-import firebase from 'firebase';
-import Router from 'vue-router';
-import LoginPage from './views/LoginPage.vue';
-import IndexPage from './views/IndexPage.vue';
-import NewPage from './views/NewPage.vue';
-import EditPage from './views/EditPage.vue';
-import ShowPage from './views/ShowPage.vue';
-import UserIndexPage from './views/UserIndexPage.vue';
+import Vue from 'vue'
+import firebase from 'firebase'
+import Router from 'vue-router'
+import LoginPage from './views/LoginPage.vue'
+import IndexPage from './views/IndexPage.vue'
+import NewPage from './views/NewPage.vue'
+import EditPage from './views/EditPage.vue'
+import ShowPage from './views/ShowPage.vue'
+import UserIndexPage from './views/UserIndexPage.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
@@ -55,34 +55,34 @@ const router = new Router({
       redirect: '/',
     },
   ],
-});
+})
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (firebase.auth().currentUser) {
-      next();
-      return;
+      next()
+      return
     }
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        next();
+        next()
       } else {
-        next({ name: 'LoginPage' });
+        next({ name: 'LoginPage' })
       }
-    });
+    })
   } else {
     if (firebase.auth().currentUser) {
-      next({ name: 'IndexPage' });
-      return;
+      next({ name: 'IndexPage' })
+      return
     }
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        next({ name: 'IndexPage' });
+        next({ name: 'IndexPage' })
       } else {
-        next();
+        next()
       }
-    });
+    })
   }
-});
+})
 
-export default router;
+export default router

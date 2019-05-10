@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import AppBtn from '@/components/AppBtn.vue';
-import CardDetail from '@/components/CardDetail.vue';
-import CommentArea from '@/components/CommentArea.vue';
-import Task from '../modules/task';
+import AppBtn from '@/components/AppBtn.vue'
+import CardDetail from '@/components/CardDetail.vue'
+import CommentArea from '@/components/CommentArea.vue'
+import Task from '../modules/task'
 
 export default {
   props: {
@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     showTask() {
-      return this.allTasks.find(task => task.id === this.$route.params.task);
+      return this.allTasks.find(task => task.id === this.$route.params.task)
     },
   },
   components: {
@@ -35,12 +35,12 @@ export default {
   methods: {
     async deleteTask() {
       if (window.confirm('タスクを削除してもよろしいですか?')) {
-        await Task.deleteTask(this.showTask.id);
-        this.$router.replace('/');
+        await Task.deleteTask(this.showTask.id)
+        this.$router.replace('/')
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

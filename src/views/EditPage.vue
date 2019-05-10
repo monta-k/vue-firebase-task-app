@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TaskForm from '@/components/TaskForm.vue';
+import TaskForm from '@/components/TaskForm.vue'
 
 export default {
   props: {
@@ -16,13 +16,13 @@ export default {
   },
   computed: {
     showTask() {
-      return this.allTasks.find(task => task.id === this.$route.params.task);
+      return this.allTasks.find(task => task.id === this.$route.params.task)
     },
   },
   components: {
     TaskForm,
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

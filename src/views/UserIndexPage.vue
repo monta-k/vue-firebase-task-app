@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import UserList from '@/components/UserList.vue';
-import User from '../modules/user';
+import UserList from '@/components/UserList.vue'
+import User from '../modules/user'
 
 export default {
   props: {
@@ -24,33 +24,33 @@ export default {
   },
   computed: {
     noAdminUsers() {
-      return this.allUsers.filter(user => user.available === false);
+      return this.allUsers.filter(user => user.available === false)
     },
     adminUsers() {
-      return this.allUsers.filter(user => user.available === true);
+      return this.allUsers.filter(user => user.available === true)
     },
   },
   methods: {
     async registerUser(userId) {
-      await User.registerUser(userId);
-      this.allUsers.find(user => user.uid === userId).available = true;
+      await User.registerUser(userId)
+      this.allUsers.find(user => user.uid === userId).available = true
     },
     async deleteUser(userId) {
       if (window.confirm('ユーザーを削除してもよろしいですか?')) {
-        await User.deleteUser(userId);
-        this.allUsers = this.allUsers.filter(user => user.uid !== userId);
+        await User.deleteUser(userId)
+        this.allUsers = this.allUsers.filter(user => user.uid !== userId)
       }
     },
   },
   created() {
     if (this.loginUser.admin === false) {
-      this.$router.replace('/');
+      this.$router.replace('/')
     }
   },
   components: {
     UserList,
   },
-};
+}
 </script>
 
 <style lang="scss">

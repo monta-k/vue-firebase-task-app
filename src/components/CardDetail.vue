@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import UserIcon from '@/components/UserIcon.vue';
+import UserIcon from '@/components/UserIcon.vue'
 
 export default {
   props: {
@@ -28,26 +28,26 @@ export default {
   },
   computed: {
     priority() {
-      let priority = '';
+      let priority = ''
       switch (this.task.priority) {
         case '0':
-          priority = '低';
-          break;
+          priority = '低'
+          break
         case '10':
-          priority = '中';
-          break;
+          priority = '中'
+          break
         case '20':
-          priority = '高';
-          break;
+          priority = '高'
+          break
         default:
       }
-      return priority;
+      return priority
     },
   },
   components: {
     UserIcon,
   },
-};
+}
 </script>
 
 <style lang="scss">

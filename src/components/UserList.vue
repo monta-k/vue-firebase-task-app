@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import UserIcon from '@/components/UserIcon.vue';
-import AppBtn from '@/components/AppBtn.vue';
+import UserIcon from '@/components/UserIcon.vue'
+import AppBtn from '@/components/AppBtn.vue'
 
 export default {
   props: {
@@ -18,14 +18,14 @@ export default {
   },
   methods: {
     handleClick(userId) {
-      this.$emit('click', userId);
+      this.$emit('click', userId)
     },
   },
   components: {
     UserIcon,
     AppBtn,
   },
-};
+}
 </script>
 
 <style lang="scss">

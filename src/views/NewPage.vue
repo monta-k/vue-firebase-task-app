@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TaskForm from '@/components/TaskForm.vue';
+import TaskForm from '@/components/TaskForm.vue'
 
 export default {
   data() {
@@ -22,7 +22,7 @@ export default {
         },
         detail: '',
       },
-    };
+    }
   },
   props: {
     allUsers: Array,
@@ -31,7 +31,7 @@ export default {
   components: {
     TaskForm,
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

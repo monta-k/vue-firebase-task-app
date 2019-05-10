@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import AppBtn from '@/components/AppBtn.vue';
-import Auth from '../modules/auth';
+import AppBtn from '@/components/AppBtn.vue'
+import Auth from '../modules/auth'
 
 export default {
   name: 'login-form',
@@ -18,11 +18,11 @@ export default {
   },
   methods: {
     async login() {
-      await Auth.googleLogin();
-      this.$router.replace({ name: 'IndexPage' });
+      await Auth.googleLogin()
+      this.$router.replace({ name: 'IndexPage' })
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -21,11 +21,11 @@ export default {
   },
   computed: {
     classes() {
-      const cls = this.type === 'mini' ? 'user-icon-mini' : 'user-icon';
-      return cls;
+      const cls = this.type === 'mini' ? 'user-icon-mini' : 'user-icon'
+      return cls
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
