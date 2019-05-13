@@ -53,10 +53,21 @@
       </div>
     </div>
 
-    <div class="task-form__file">
-      <input class="task-form__file__form" type="file" @change="selectFile">
-      <li v-for="file in task.files" :key="file.id">
-        <a :href="file.path" target="__blank">{{ file.name }}</a>
+    <div class="task-form__file-area">
+      <label class="task-form__file-area__label" for="file_upload" v-if="uploadFiles.length + task.files.length < 3">
+        <font-awesome-icon icon="arrow-circle-up" />
+        アップロードファイルを追加(1ファイル5MBまで)
+        <input class="task-form__file-area__label__form" id="file_upload" type="file" @change="selectFile">
+      </label>
+      <p class="task-form__file-area__message" v-else>アップロードできるファイルは3つまでです</p>
+      
+      <li class="task-form__file-area__upload-files" v-for="uploadFile in uploadFiles" :key="uploadFile.name">
+        <font-awesome-icon class="task-form__file-area__upload-files__trash" icon="trash" style="cursor:pointer" @click="cancelUpload(uploadFile)" />
+        <p class="task-form__file-area__upload-files__name">{{ uploadFile.name }}</p>
+      </li>
+
+      <li class="task-form__file-area__files" v-for="file in task.files" :key="file.id">
+        <a class="task-form__file-area__files__name" :href="file.path" target="__blank">{{ file.name }}</a>
       </li>
     </div>
 
@@ -76,7 +87,7 @@ import Uploader from '../modules/uploader'
 export default {
   data() {
     return {
-      uploadFile: null,
+      uploadFiles: [],
     }
   },
   props: {
@@ -94,8 +105,8 @@ export default {
     async submitTask() {
       try {
         const submitedTask = await Task.submitTask(this.editedTask, this.loginUser)
-        if (this.uploadFile) {
-          await Uploader.fileUpload(submitedTask.id, this.uploadFile)
+        if (this.uploadFiles.length > 0) {
+          await Uploader.fileUpload(submitedTask.id, this.uploadFiles)
         }
         console.log('task successfully update!')
         this.$router.replace('/')
@@ -103,16 +114,20 @@ export default {
         console.error('Error update task: ', e)
       }
     },
-    checkForm() {
-      this.$validator.validateAll().then((result) => {
-        if (result) {
-          this.submitTask()
-        }
-      })
+    async checkForm() {
+      const result = await this.$validator.validateAll()
+      if (result && this.uploadFiles.length + this.task.files.length < 4) {
+        this.submitTask()
+      }
     },
     selectFile(e) {
-      const [targetFile] = e.target.files
-      this.uploadFile = targetFile
+      const file = e.target.files[0]
+      if (file.size < 5242880 && ![...this.uploadFiles, ...this.task.files].find(findFile => findFile.name === file.name)) {
+        this.uploadFiles.push(file)
+      }
+    },
+    cancelUpload(uploadFile) {
+      this.uploadFiles = this.uploadFiles.filter(file => file.name !== uploadFile.name)
     },
   },
   components: {
@@ -168,13 +183,36 @@ export default {
         }
       }
     }
-    &__file {
+    &__file-area {
       margin: 0 auto;
       width: 60%;
       text-align: left;
-      &__form {
-        display: block;
-        margin: 5px 0;
+      &__label {
+        display: inline-block;
+        background-color: $sub-color;
+        color: white;
+        padding: 10px 5px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        &__form {
+          display: none;
+          margin: 5px 0;
+        }
+      }
+      &__upload-files {
+        list-style: none;
+        margin-bottom: 5px;
+        &__trash {
+          margin-right: 10px;
+        }
+        &__name {
+          display: inline-block;
+        }
+      }
+      &__files {
+        list-style: none;
+        margin-bottom: 5px;
       }
     }
   }

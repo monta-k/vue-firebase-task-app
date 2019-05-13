@@ -7,7 +7,8 @@
     <div class="card-detail__detail"><p>{{ task.detail }}</p></div>
 
     <div class="card-detail__files">
-      <li v-for="file in task.files" :key="file.id">
+      <li class="card-detail__files__single" v-for="file in task.files" :key="file.id">
+        <font-awesome-icon class="card-detail__files__single__trash" icon="trash" style="cursor:pointer" @click="deleteFile(file)" v-if="loginUser.admin === true" />
         <a :href="file.path" target="__blank">{{ file.name }}</a>
       </li>
     </div>
@@ -21,10 +22,12 @@
 
 <script>
 import UserIcon from '@/components/UserIcon.vue'
+import Uploader from '../modules/uploader'
 
 export default {
   props: {
     task: Object,
+    loginUser: Object,
   },
   computed: {
     priority() {
@@ -42,6 +45,14 @@ export default {
         default:
       }
       return priority
+    },
+  },
+  methods: {
+    async deleteFile(deleteFile) {
+      if (window.confirm('コメントを削除してもよろしいですか?')) {
+        await Uploader.fileDelete(this.task.id, deleteFile)
+        this.task.files = this.task.files.filter(file => file.id !== deleteFile.id)
+      }
     },
   },
   components: {
@@ -82,6 +93,13 @@ export default {
     }
     &__files {
       text-align: left;
+      &__single {
+        list-style: none;
+        margin-bottom: 5px;
+        &__trash {
+          margin-right: 10px;
+        }
+      }
     }
     &__foot {
       display: flex;
