@@ -32,4 +32,15 @@ export default {
         id: doc.id,
       }))
   },
+
+  async deleteTaskFiles(taskId) {
+    const querySnapshot = await db.collection('tasks').doc(taskId).collection('files').get()
+    await querySnapshot.docs.forEach((doc) => {
+      const file = {
+        id: doc.id,
+        ...doc.data(),
+      }
+      this.fileDelete(taskId, file)
+    })
+  },
 }

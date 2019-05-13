@@ -51,6 +51,7 @@ export default {
     const doc = await db.collection('tasks').doc(taskId).get()
     if (doc.exists) {
       this.deleteTaskComments(taskId)
+      Uploader.deleteTaskFiles(taskId)
       doc.ref.delete()
     }
   },

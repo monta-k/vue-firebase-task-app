@@ -60,7 +60,7 @@
         <input class="task-form__file-area__label__form" id="file_upload" type="file" @change="selectFile">
       </label>
       <p class="task-form__file-area__message" v-else>アップロードできるファイルは3つまでです</p>
-      
+
       <li class="task-form__file-area__upload-files" v-for="uploadFile in uploadFiles" :key="uploadFile.name">
         <font-awesome-icon class="task-form__file-area__upload-files__trash" icon="trash" style="cursor:pointer" @click="cancelUpload(uploadFile)" />
         <p class="task-form__file-area__upload-files__name">{{ uploadFile.name }}</p>
