@@ -38,7 +38,7 @@ export default {
     await querySnapshot.docs.forEach((doc) => {
       const file = {
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }
       this.fileDelete(taskId, file)
     })
