@@ -37,7 +37,7 @@ export default {
   async deleteUser(user) {
     const doc = await db.collection('users').doc(user).get()
     if (doc.exists) {
-      doc.ref.delete()
+      await doc.ref.delete()
     }
   },
 
