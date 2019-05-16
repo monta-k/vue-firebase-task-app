@@ -42,6 +42,7 @@ export default {
   props: {
     allTasks: Array,
     searchWord: String,
+    narrowing: String,
   },
   computed: {
     toDoTask: {
@@ -69,9 +70,12 @@ export default {
       },
     },
     searchedTasks() {
-      return this.allTasks.filter(task => ((task.name.indexOf(this.searchWord) !== -1)
+      return this.narrowedTask.filter(task => ((task.name.indexOf(this.searchWord) !== -1)
         || (task.assigned_user.name.indexOf(this.searchWord) !== -1)
         || (task.registered_user.name.indexOf(this.searchWord) !== -1)))
+    },
+    narrowedTask() {
+      return this.narrowing === '' ? this.allTasks : this.allTasks.filter(task => task.priority === this.narrowing)
     },
   },
   methods: {

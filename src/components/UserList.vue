@@ -2,7 +2,7 @@
   <div class="user-list">
     <div class="user-list__single" v-for="user in users" :key="user.uid">
       <user-icon class="user-list__single__icon" type="mini" :user="user"></user-icon>
-      <app-btn class="user-list__single__btn" @click="handleClick(user.uid)" :variation="btnVariation"><slot /></app-btn>
+      <app-btn class="user-list__single__btn" @click="handleClick(user.uid)" :variation="btnVariation" v-if="user.uid !== loginUser.uid"><slot /></app-btn>
     </div>
   </div>
 </template>
@@ -14,6 +14,7 @@ import AppBtn from '@/components/AppBtn.vue'
 export default {
   props: {
     users: Array,
+    loginUser: Object,
     btnVariation: String,
   },
   methods: {

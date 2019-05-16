@@ -52,7 +52,7 @@ export default {
     if (doc.exists) {
       this.deleteTaskComments(taskId)
       Uploader.deleteTaskFiles(taskId)
-      doc.ref.delete()
+      await doc.ref.delete()
     }
   },
 
@@ -83,16 +83,12 @@ export default {
     const doc = await db.collection('tasks').doc(taskId).collection('comments').doc(commentId)
       .get()
     if (doc.exists) {
-      doc.ref.delete()
+      await doc.ref.delete()
     }
   },
 
   async deleteTaskComments(taskId) {
     const querySnapshot = await db.collection('tasks').doc(taskId).collection('comments').get()
-    await querySnapshot.docs.forEach((doc) => {
-      if (doc.exists) {
-        doc.ref.delete()
-      }
-    })
+    await Promise.all(querySnapshot.docs.map(doc => (doc.exists ? doc.ref.delete() : Promise.resolve())))
   },
 }

@@ -20,7 +20,7 @@ export default {
     const doc = await db.collection('tasks').doc(taskId).collection('files').doc(file.id)
       .get()
     if (doc.exists) {
-      doc.ref.delete()
+      await doc.ref.delete()
     }
   },
 
@@ -35,12 +35,12 @@ export default {
 
   async deleteTaskFiles(taskId) {
     const querySnapshot = await db.collection('tasks').doc(taskId).collection('files').get()
-    await querySnapshot.docs.forEach((doc) => {
+    await Promise.all(querySnapshot.docs.map((doc) => {
       const file = {
         id: doc.id,
         ...doc.data(),
       }
-      this.fileDelete(taskId, file)
-    })
+      return this.fileDelete(taskId, file)
+    }))
   },
 }

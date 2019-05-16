@@ -3,11 +3,11 @@
     <div class="user-index-page__user-lists">
       <div class="user-index-page__user-lists__no-admin">
         <h1 class="user-index-page__user-lists__no-admin__title"><font-awesome-icon icon="user" /> 利用承認待ちユーザー</h1>
-        <user-list :users="noAdminUsers" @click="registerUser">承認</user-list>
+        <user-list :users="noAdminUsers" @click="registerUser" :loginUser="loginUser">承認</user-list>
       </div>
       <div class="user-index-page__user-lists__admin">
         <h1 class="user-index-page__user-lists__admin__title"><font-awesome-icon icon="user-check" /> 利用承認済みユーザー</h1>
-        <user-list :users="adminUsers" @click="deleteUser" :btnVariation="'danger'">削除</user-list>
+        <user-list :users="adminUsers" @click="deleteUser" :btnVariation="'danger'" :loginUser="loginUser">削除</user-list>
       </div>
     </div>
   </div>
