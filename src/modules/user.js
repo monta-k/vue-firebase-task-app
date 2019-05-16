@@ -7,7 +7,7 @@ export default {
   },
 
   async allUsers() {
-    const querySnapshot = await db.collection('users').get()
+    const querySnapshot = await db.collection('users').where('delete_flag', '==', false).get()
     return querySnapshot.docs.map(doc => (
       {
         ...doc.data(),
@@ -22,6 +22,7 @@ export default {
         photo: user.photoURL,
         admin: false,
         available: false,
+        delete_flag: false,
       }
       await db.collection('users').doc(user.uid).set({
         ...data,
@@ -35,15 +36,26 @@ export default {
   },
 
   async deleteUser(user) {
-    const doc = await db.collection('users').doc(user).get()
-    if (doc.exists) {
-      await doc.ref.delete()
-    }
+    await db.collection('users').doc(user).update({
+      name: '削除済みユーザー',
+      photo: null,
+      admin: false,
+      available: false,
+      delete_flag: true,
+    })
   },
 
   async registerUser(user) {
     await db.collection('users').doc(user).update({
       available: true,
+    })
+  },
+
+  async reRegisterUser(user) {
+    await db.collection('users').doc(user.uid).update({
+      name: user.displayName,
+      photo: user.photoURL,
+      delete_flag: false,
     })
   },
 }
