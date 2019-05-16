@@ -9,6 +9,7 @@ export default {
       await db.collection('tasks').doc(taskId).collection('files').add({
         path: await storageRef.getDownloadURL(),
         name: file.name,
+        type: file.type,
         created_at: now,
       })
     })
