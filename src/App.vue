@@ -2,14 +2,23 @@
   <div id="app">
     <app-header v-if="$route.name !== 'LoginPage'" :loginUser="loginUser" @logout="logout"></app-header>
     <app-loading v-if="loading"></app-loading>
-    <h2 v-if="!loading && !available">利用が承認されるまでお待ちください</h2>
+
+    <h2 v-if="!loading && !available && !deletedUser">利用が承認されるまでお待ちください</h2>
+
+    <div v-if="!loading && !available && deletedUser">
+      <h2 style="margin-bottom:10px">このユーザーは削除済みです</h2>
+      <app-btn @click="reRegisterUser">再登録する</app-btn>
+    </div>
+
     <router-view v-if="!loading && available" :allUsers="allUsers" :allTasks="allTasks" :loginUser="loginUser"></router-view>
+
   </div>
 </template>
 
 <script>
 import AppHeader from '@/components/AppHeader.vue'
 import AppLoading from '@/components/AppLoading.vue'
+import AppBtn from '@/components/AppBtn.vue'
 import Auth from './modules/auth'
 import User from './modules/user'
 import Task from './modules/task'
@@ -27,6 +36,9 @@ export default {
   computed: {
     available() {
       return (this.loginUser.available || this.$route.name === 'LoginPage')
+    },
+    deletedUser() {
+      return this.loginUser.delete_flag
     },
   },
   created() {
@@ -50,6 +62,14 @@ export default {
       this.allTasks = []
       this.$router.replace({ name: 'LoginPage' })
     },
+    async reRegisterUser() {
+      firebase.auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          await User.reRegisterUser(user)
+          this.loginUser = await User.findUser(user.uid)
+        }
+      })
+    },
   },
   watch: {
     async $route(to) {
@@ -64,6 +84,7 @@ export default {
   components: {
     AppHeader,
     AppLoading,
+    AppBtn,
   },
 }
 </script>
