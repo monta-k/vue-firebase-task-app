@@ -89,8 +89,6 @@ export default {
 
   async deleteTaskComments(taskId) {
     const querySnapshot = await db.collection('tasks').doc(taskId).collection('comments').get()
-    await Promise.all(querySnapshot.docs.map((doc) => {
-      return doc.exists ? doc.ref.delete() : Promise.resolve()
-    }))
+    await Promise.all(querySnapshot.docs.map(doc => (doc.exists ? doc.ref.delete() : Promise.resolve())))
   },
 }
