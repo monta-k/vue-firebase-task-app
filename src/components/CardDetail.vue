@@ -8,8 +8,12 @@
 
     <div class="card-detail__files">
       <li class="card-detail__files__single" v-for="file in task.files" :key="file.id">
+        <img class="card-detail__files__single__preview" :src="file.path" :alt="file.name" v-if="isImage(file.type)">
+        <font-awesome-icon class="card-detail__files__single__preview" icon="file" size="9x" v-if="!isImage(file.type)" />
         <font-awesome-icon class="card-detail__files__single__trash" icon="trash" style="cursor:pointer" @click="deleteFile(file)" v-if="loginUser.admin === true" />
-        <a :href="file.path" target="__blank">{{ file.name }}</a>
+        <a class="card-detail__files__single__name" :href="file.path" target="__blank">
+          {{ file.name }}
+        </a>
       </li>
     </div>
 
@@ -54,6 +58,9 @@ export default {
         this.task.files = this.task.files.filter(file => file.id !== deleteFile.id)
       }
     },
+    isImage(type) {
+      return type.indexOf('image') === 0
+    },
   },
   components: {
     UserIcon,
@@ -95,7 +102,14 @@ export default {
       text-align: left;
       &__single {
         list-style: none;
-        margin-bottom: 5px;
+        display: inline-block;
+        width: 33%;
+        &__preview {
+          display: block;
+          margin-bottom: 5px;
+          width: 150px;
+          height: 150px;
+        }
         &__trash {
           margin-right: 10px;
         }
