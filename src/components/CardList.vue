@@ -47,25 +47,28 @@ export default {
   computed: {
     toDoTask: {
       get() {
-        return this.searchedTasks.filter(task => task.progress === '0')
+        return this.taskOrder(this.searchedTasks.filter(task => task.progress === '0'))
       },
       set(value) {
+        this.updateOrder(value),
         this.updateProgress(value, '0')
       },
     },
     inProgressTask: {
       get() {
-        return this.searchedTasks.filter(task => task.progress === '10')
+        return this.taskOrder(this.searchedTasks.filter(task => task.progress === '10'))
       },
       set(value) {
+        this.updateOrder(value),
         this.updateProgress(value, '10')
       },
     },
     doneTask: {
       get() {
-        return this.searchedTasks.filter(task => task.progress === '20')
+        return this.taskOrder(this.searchedTasks.filter(task => task.progress === '20'))
       },
       set(value) {
+        this.updateOrder(value),
         this.updateProgress(value, '20')
       },
     },
@@ -86,6 +89,21 @@ export default {
       }
       this.allTasks.find(task => task.id === updateTask.id).progress = progress
       Task.updateProgress(updateTask.id, progress)
+    },
+    updateOrder(tasks) {
+      tasks.forEach((updatetask, index) => {
+        (this.allTasks.find(task => task.id === updatetask.id)).order_id = index
+      })
+      Task.updateOrder(tasks)
+    },
+    taskOrder(tasks) {
+      return tasks.sort((a, b) => {
+        if (a.order_id < b.order_id) return -1
+        if (a.order_id > b.order_id) return 1
+        if (a.created_at < b.created_at) return -1
+        if (a.created_at > b.created_at) return 1
+        return 0
+      })
     },
   },
   components: {

@@ -12,7 +12,7 @@ export default {
   },
 
   async allTasks() {
-    const querySnapshot = await db.collection('tasks').orderBy('priority', 'desc').get()
+    const querySnapshot = await db.collection('tasks').get()
     return Promise.all(querySnapshot.docs.map(async doc => (
       {
         ...doc.data(),
@@ -56,8 +56,12 @@ export default {
     }
   },
 
-  updateProgress(taskId, progress) {
-    db.collection('tasks').doc(taskId).update({ progress })
+  async updateProgress(taskId, progress) {
+    await db.collection('tasks').doc(taskId).update({ progress })
+  },
+
+  async updateOrder(tasks) {
+    await Promise.all(tasks.map((task, index) => db.collection('tasks').doc(task.id).update({ order_id: index })))
   },
 
   async fetchComments(taskId) {
