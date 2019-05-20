@@ -21,6 +21,7 @@ export default {
           uid: '',
         },
         detail: '',
+        order_id: Infinity,
         files: [],
       },
     }
