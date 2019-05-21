@@ -104,11 +104,12 @@ export default {
         list-style: none;
         display: inline-block;
         width: 33%;
+        height: 150px;
         &__preview {
           display: block;
           margin-bottom: 5px;
-          width: 150px;
-          height: 150px;
+          max-width: auto;
+          max-height: 100%;
         }
         &__trash {
           margin-right: 10px;
