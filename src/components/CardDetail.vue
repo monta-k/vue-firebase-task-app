@@ -53,13 +53,13 @@ export default {
   },
   methods: {
     async deleteFile(deleteFile) {
-      if (window.confirm('コメントを削除してもよろしいですか?')) {
+      if (window.confirm('ファイルを削除してもよろしいですか?')) {
         await Uploader.fileDelete(this.task.id, deleteFile)
         this.task.files = this.task.files.filter(file => file.id !== deleteFile.id)
       }
     },
     isImage(type) {
-      return type.indexOf('image') === 0
+      return /image/.test(type)
     },
   },
   components: {
