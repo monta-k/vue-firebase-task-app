@@ -50,7 +50,7 @@ export default {
         return this.taskOrder(this.searchedTasks.filter(task => task.progress === '0'))
       },
       set(value) {
-        this.updateOrder(value),
+        this.updateOrder(value)
         this.updateProgress(value, '0')
       },
     },
@@ -59,7 +59,7 @@ export default {
         return this.taskOrder(this.searchedTasks.filter(task => task.progress === '10'))
       },
       set(value) {
-        this.updateOrder(value),
+        this.updateOrder(value)
         this.updateProgress(value, '10')
       },
     },
@@ -68,14 +68,17 @@ export default {
         return this.taskOrder(this.searchedTasks.filter(task => task.progress === '20'))
       },
       set(value) {
-        this.updateOrder(value),
+        this.updateOrder(value)
         this.updateProgress(value, '20')
       },
     },
+    searchWordRegex() {
+      return new RegExp(this.searchWord)
+    },
     searchedTasks() {
-      return this.narrowedTask.filter(task => ((task.name.indexOf(this.searchWord) !== -1)
-        || (task.assigned_user.name.indexOf(this.searchWord) !== -1)
-        || (task.registered_user.name.indexOf(this.searchWord) !== -1)))
+      return this.narrowedTask.filter(task => (this.searchWordRegex.test(task.name)
+        || this.searchWordRegex.test(task.assigned_user.name)
+        || this.searchWordRegex.test(task.registered_user.name)))
     },
     narrowedTask() {
       return this.narrowing === '' ? this.allTasks : this.allTasks.filter(task => task.priority === this.narrowing)
@@ -91,6 +94,7 @@ export default {
       Task.updateProgress(updateTask.id, progress)
     },
     updateOrder(tasks) {
+      console.log(tasks)
       tasks.forEach((updatetask, index) => {
         (this.allTasks.find(task => task.id === updatetask.id)).order_id = index
       })

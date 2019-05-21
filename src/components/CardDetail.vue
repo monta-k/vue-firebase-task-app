@@ -53,13 +53,13 @@ export default {
   },
   methods: {
     async deleteFile(deleteFile) {
-      if (window.confirm('コメントを削除してもよろしいですか?')) {
+      if (window.confirm('ファイルを削除してもよろしいですか?')) {
         await Uploader.fileDelete(this.task.id, deleteFile)
         this.task.files = this.task.files.filter(file => file.id !== deleteFile.id)
       }
     },
     isImage(type) {
-      return type.indexOf('image') === 0
+      return /image/.test(type)
     },
   },
   components: {
@@ -104,11 +104,12 @@ export default {
         list-style: none;
         display: inline-block;
         width: 33%;
+        height: 150px;
         &__preview {
           display: block;
           margin-bottom: 5px;
-          width: 150px;
-          height: 150px;
+          max-width: auto;
+          max-height: 100%;
         }
         &__trash {
           margin-right: 10px;
