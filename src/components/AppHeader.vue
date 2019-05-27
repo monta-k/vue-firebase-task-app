@@ -4,6 +4,7 @@
     <div class="navbar__right">
       <UserIcon class="navbar__right__icon" :user="loginUser" v-if="loginUser.uid"></UserIcon>
       <router-link class="navbar__right__link" to="/users" v-if="loginUser.admin">ユーザー管理</router-link>
+      <router-link class="navbar__right__link" to="/graph">利用状況</router-link>
       <app-btn class="navbar__right__btn" variation="text" @click="logout">ログアウト <font-awesome-icon icon="sign-out-alt" /></app-btn>
     </div>
   </header>

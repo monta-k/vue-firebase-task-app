@@ -7,6 +7,7 @@ import NewPage from './views/NewPage.vue'
 import EditPage from './views/EditPage.vue'
 import ShowPage from './views/ShowPage.vue'
 import UserIndexPage from './views/UserIndexPage.vue'
+import GraphPage from './views/GraphPage.vue'
 
 Vue.use(Router)
 
@@ -48,6 +49,12 @@ const router = new Router({
       path: '/users',
       name: 'UserIndexPage',
       component: UserIndexPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/graph',
+      name: 'GraphPage',
+      component: GraphPage,
       meta: { requiresAuth: true },
     },
     {

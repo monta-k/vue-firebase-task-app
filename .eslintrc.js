@@ -27,6 +27,7 @@ module.exports = {
     'no-shadow': ['error', { allow: ['state'] }],
     'no-param-reassign': ['error', { props: false }],
     'import/no-extraneous-dependencies': ['off'],
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
   },
   settings: {
     'import/resolver': {
