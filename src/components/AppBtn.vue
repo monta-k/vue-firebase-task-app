@@ -4,7 +4,6 @@
 
 <script>
 export default {
-  name: 'btn',
   props: {
     variation: {
       type: String,
