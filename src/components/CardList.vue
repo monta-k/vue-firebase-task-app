@@ -76,7 +76,7 @@ export default {
   methods: {
     dragUpdate(tasks, progress) {
       tasks.forEach((updatetask, index) => {
-        Object.assign((this.allTasks.find(task => task.id === updatetask.id)), { order_id: index, progress: progress })
+        Object.assign((this.allTasks.find(task => task.id === updatetask.id)), { order_id: index, progress })
       })
       Task.dragUpdate(tasks, progress)
     },
