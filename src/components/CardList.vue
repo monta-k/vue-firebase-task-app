@@ -3,7 +3,7 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> To Do</h1>
       <draggable element="div" class="card-list__section__cards" :options="{ group: 'tasks' }" v-model="toDoTask">
-        <router-link v-for="task in toDoTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+        <router-link v-for="task in toDoTask" :key="task.id" v-show="showTask(task)" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
@@ -13,7 +13,7 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> In Progress</h1>
       <draggable element="div" class="card-list__section__cards" :options="{ group: 'tasks' }" v-model="inProgressTask">
-        <router-link v-for="task in inProgressTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+        <router-link v-for="task in inProgressTask" :key="task.id" v-show="showTask(task)" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
@@ -23,7 +23,7 @@
     <div class="card-list__section">
       <h1 class="card-list__section__title"><font-awesome-icon icon="list-ul" /> Done</h1>
       <draggable element="div" class="card-list__section__cards" :options="{ group: 'tasks' }" v-model="doneTask">
-        <router-link v-for="task in doneTask" :key="task.id" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
+        <router-link v-for="task in doneTask" :key="task.id" v-show="showTask(task)" class="card-list__section__cards__single" :to="{ name: 'ShowPage', params: { task: task.id } }">
           <div class="card-list__section__cards__single__flag" :class="{'high': task.priority == 20, 'middle': task.priority == 10}"></div>
           <p class="card-list__section__cards__single__title">{{ task.name }}</p>
           <user-icon class="card-list__section__cards__single__user" type="mini" :user="task.assigned_user"></user-icon>
@@ -47,58 +47,47 @@ export default {
   computed: {
     toDoTask: {
       get() {
-        return this.taskOrder(this.searchedTasks.filter(task => task.progress === '0'))
+        return this.taskOrder(this.allTasks.filter(task => task.progress === '0'))
       },
       set(value) {
-        this.updateOrder(value)
-        this.updateProgress(value, '0')
+        this.dragUpdate(value, '0')
       },
     },
     inProgressTask: {
       get() {
-        return this.taskOrder(this.searchedTasks.filter(task => task.progress === '10'))
+        return this.taskOrder(this.allTasks.filter(task => task.progress === '10'))
       },
       set(value) {
-        this.updateOrder(value)
-        this.updateProgress(value, '10')
+        this.dragUpdate(value, '10')
       },
     },
     doneTask: {
       get() {
-        return this.taskOrder(this.searchedTasks.filter(task => task.progress === '20'))
+        return this.taskOrder(this.allTasks.filter(task => task.progress === '20'))
       },
       set(value) {
-        this.updateOrder(value)
-        this.updateProgress(value, '20')
+        this.dragUpdate(value, '20')
       },
     },
     searchWordRegex() {
       return new RegExp(this.searchWord)
     },
-    searchedTasks() {
-      return this.narrowedTask.filter(task => (this.searchWordRegex.test(task.name)
-        || this.searchWordRegex.test(task.assigned_user.name)
-        || this.searchWordRegex.test(task.registered_user.name)))
-    },
-    narrowedTask() {
-      return this.narrowing === '' ? this.allTasks : this.allTasks.filter(task => task.priority === this.narrowing)
-    },
   },
   methods: {
-    updateProgress(tasks, progress) {
-      const updateTask = tasks.find(task => task.progress !== progress)
-      if (updateTask === undefined) {
-        return
-      }
-      this.allTasks.find(task => task.id === updateTask.id).progress = progress
-      Task.updateProgress(updateTask.id, progress)
-    },
-    updateOrder(tasks) {
-      console.log(tasks)
+    dragUpdate(tasks, progress) {
       tasks.forEach((updatetask, index) => {
-        (this.allTasks.find(task => task.id === updatetask.id)).order_id = index
+        Object.assign((this.allTasks.find(task => task.id === updatetask.id)), { order_id: index, progress: progress })
       })
-      Task.updateOrder(tasks)
+      Task.dragUpdate(tasks, progress)
+    },
+    narrowedTask(task) {
+      return (this.narrowing === '' || this.narrowing === task.priority)
+    },
+    searchedTask(task) {
+      return (this.searchWordRegex.test(task.name) || this.searchWordRegex.test(task.assigned_user.name) || this.searchWordRegex.test(task.registered_user.name))
+    },
+    showTask(task) {
+      return this.narrowedTask(task) && this.searchedTask(task)
     },
     taskOrder(tasks) {
       return tasks.sort((a, b) => {
