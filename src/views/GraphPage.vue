@@ -11,12 +11,12 @@
 
 <script>
 import AppChart from '@/components/AppChart.vue'
+import moment from 'moment'
 
 export default {
   data() {
     return {
-      year: null,
-      month: null,
+      showTime: moment(),
       chartOptions: {
         responsive: true,
         legend: {
@@ -60,14 +60,14 @@ export default {
   },
   computed: {
     yearMonth() {
-      return `${this.year}/${this.month + 1}`
+      return this.showTime.format('YYYY-MM')
     },
-    days() {
-      return new Date(this.year, this.month + 1, 0).getDate()
+    daysInMonth() {
+      return this.showTime.daysInMonth()
     },
     chartData() {
       return {
-        labels: [...Array(this.days).keys()].map(i => i + 1),
+        labels: [...Array(this.daysInMonth).keys()].map(i => i + 1),
         datasets: [
           {
             type: 'bar',
@@ -82,26 +82,16 @@ export default {
   },
   methods: {
     nextMonth() {
-      if (this.month === 11) {
-        this.month = 0
-        this.year += 1
-        return
-      }
-      this.month += 1
+      this.showTime = this.showTime.clone().add(1, 'months')
     },
     prevMonth() {
-      if (this.month === 0) {
-        this.month = 11
-        this.year -= 1
-        return
-      }
-      this.month -= 1
+      this.showTime = this.showTime.clone().subtract(1, 'months')
     },
     addedTasks() {
       const data = []
-      for (let i = 1; i < this.days + 1; i++) {
-        const today = Date.parse(new Date(this.year, this.month, i))
-        const tomorrow = Date.parse(new Date(this.year, this.month, i + 1))
+      for (let i = 1; i < this.daysInMonth + 1; i++) {
+        const today = moment(`${this.yearMonth}-${i}`).valueOf()
+        const tomorrow = moment(`${this.yearMonth}-${i + 1}`).valueOf()
         let count = 0
         this.allTasks.forEach((task) => {
           if (today <= task.created_at && task.created_at < tomorrow) {
@@ -112,10 +102,6 @@ export default {
       }
       return data
     },
-  },
-  mounted() {
-    this.year = new Date().getFullYear()
-    this.month = new Date().getMonth()
   },
   components: {
     AppChart,
