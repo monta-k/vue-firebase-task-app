@@ -39,7 +39,8 @@
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10",
-    "vuedraggable": "^2.20.0"
+    "vuedraggable": "^2.20.0",
+    "fstream": ">=1.0.12"
   },
   "eslintConfig": {
     "root": true,
