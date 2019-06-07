@@ -41,12 +41,10 @@ export default {
       return this.loginUser.delete_flag
     },
   },
-  created() {
+  mounted() {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        this.loginUser = await User.findUser(user.uid) || await User.createUser(user)
-        this.allUsers = await User.allUsers()
-        this.allTasks = await Task.allTasks()
+        [this.loginUser, this.allUsers, this.allTasks] = await Promise.all([(User.findUser(user.uid) || User.createUser(user)), User.allUsers(), Task.allTasks()])
         this.loading = false
       } else {
         this.loading = false
@@ -75,8 +73,7 @@ export default {
     async $route(to) {
       if (to.path === '/') {
         this.loading = true
-        this.allUsers = await User.allUsers()
-        this.allTasks = await Task.allTasks()
+        ;[this.allUsers, this.allTasks] = await Promise.all([User.allUsers(), Task.allTasks()])
         this.loading = false
       }
     },

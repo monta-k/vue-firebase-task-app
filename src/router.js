@@ -8,6 +8,8 @@ import EditPage from './views/EditPage.vue'
 import ShowPage from './views/ShowPage.vue'
 import UserIndexPage from './views/UserIndexPage.vue'
 import GraphPage from './views/GraphPage.vue'
+import AddedTaskChart from '@/components/AddedTaskChart.vue'
+import TaskCountChart from '@/components/TaskCountChart.vue'
 
 Vue.use(Router)
 
@@ -56,6 +58,20 @@ const router = new Router({
       name: 'GraphPage',
       component: GraphPage,
       meta: { requiresAuth: true },
+      children: [
+        {
+          path: 'addedTask',
+          name: 'AddedTaskChart',
+          component: AddedTaskChart,
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'countTask',
+          name: 'TaskCountChart',
+          component: TaskCountChart,
+          meta: { requiresAuth: true },
+        },
+      ],
     },
     {
       path: '*',

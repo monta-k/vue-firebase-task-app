@@ -78,7 +78,7 @@ export default {
       tasks.forEach((updatetask, index) => {
         Object.assign((this.allTasks.find(task => task.id === updatetask.id)), { order_id: index, progress })
       })
-      Task.dragUpdate(tasks, progress)
+      Task.OrderUpdate(tasks, progress)
     },
     narrowedTask(task) {
       return (this.narrowing === '' || this.narrowing === task.priority)

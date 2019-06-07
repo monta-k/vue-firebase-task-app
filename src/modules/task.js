@@ -56,7 +56,7 @@ export default {
     }
   },
 
-  async dragUpdate(tasks, progress) {
+  async OrderUpdate(tasks, progress) {
     await Promise.all(tasks.map((task, index) => db.collection('tasks').doc(task.id).update({ order_id: index, progress })))
   },
 
