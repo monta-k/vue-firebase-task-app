@@ -23,7 +23,7 @@ export default {
       chartOptions: {
         responsive: true,
         legend: {
-          display: false,
+          display: true,
         },
         scales: {
           yAxes: [{
